@@ -11,7 +11,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flysen_frontend_mobile/features/auth/presentation/blocs/bottom_sheet_cubit.dart';
+import 'package:flysen_frontend_mobile/features/auth/auth.dart';
+import 'package:flysen_frontend_mobile/features/auth/presentation/blocs/bottom_sheet/bottom_sheet_cubit.dart';
 import 'package:flysen_frontend_mobile/features/notification_message/presentation/bloc/notification_bloc.dart';
 import 'package:flysen_frontend_mobile/firebase_options.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -44,6 +45,9 @@ class App extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => getIt<NotificationBloc>(),
+        ),
+        BlocProvider(
+            create: (context) => getIt<AuthBloc>(),
         ),
         BlocProvider(create: (context) => getIt<BottomSheetCubit>()),
       ],
