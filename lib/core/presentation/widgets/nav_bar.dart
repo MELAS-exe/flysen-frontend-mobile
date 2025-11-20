@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flysen_frontend_mobile/core/presentation/widgets/top_bar.dart';
 import 'package:flysen_frontend_mobile/core/theme/theme.dart';
 import 'package:flysen_frontend_mobile/features/discover/presentation/pages/discover.dart';
 import 'package:flysen_frontend_mobile/features/profile/presentation/pages/profile.dart';
@@ -17,6 +18,7 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: TopBar(),
       body: SafeArea(
         child: Stack(
           children: [
@@ -38,6 +40,7 @@ class _NavBarState extends State<NavBar> {
       width: 240,
       height: 60,
       decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(100),
           border: Border.all(width: 2, color: Colors.grey)),
       child: Row(

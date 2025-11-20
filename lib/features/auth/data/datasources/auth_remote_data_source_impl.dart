@@ -112,13 +112,25 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         },
       );
 
-      if (response.statusCode != 200) {
+      // Check for non-successful status codes
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        // Success, do nothing and return.
+        return;
+      } else if (response.statusCode == 403) {
+        // If forbidden, throw a specific AuthException.
+        throw AuthException(
+          message: 'Failed to sign out: Token is invalid or expired.',
+        );
+      } else {
+        // For all other error codes, throw a generic ServerException.
         throw ServerException(
           message: 'Failed to sign out: ${response.statusCode}',
         );
       }
     } catch (e) {
-      if (e is ServerException) rethrow;
+      // Re-throw custom exceptions to be handled by the repository.
+      if (e is ServerException || e is AuthException) rethrow;
+      // Catch other errors (like no network) and wrap them.
       throw ServerException(message: 'Network error: ${e.toString()}');
     }
   }

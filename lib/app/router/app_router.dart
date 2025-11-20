@@ -5,6 +5,7 @@ import 'package:flysen_frontend_mobile/features/auth/presentation/pages/introduc
 import 'package:flysen_frontend_mobile/features/chatbot/presentation/pages/chatbot.dart';
 import 'package:flysen_frontend_mobile/features/reservation/presentation/pages/history.dart';
 import 'package:flysen_frontend_mobile/features/reservation/presentation/pages/hotel_ticket_detail.dart';
+import 'package:flysen_frontend_mobile/features/reservation/presentation/pages/flight_stepper_screen.dart';
 import 'package:flysen_frontend_mobile/features/reservation/presentation/pages/stay_step1.dart';
 import 'package:flysen_frontend_mobile/features/reservation/presentation/pages/stay_step2.dart';
 import 'package:flysen_frontend_mobile/features/reservation/presentation/pages/trip_step1.dart';
@@ -27,6 +28,7 @@ class AppRouter extends Equatable {
   static const hotelTicketDetail = 'hotelTicketDetail';
   static const history = 'history';
   static const chatBot = 'chatBot';
+  static const flightStepper = 'flightStepper';
 
   @override
   List<Object?> get props => [
@@ -40,7 +42,8 @@ class AppRouter extends Equatable {
         tripStep4,
         tripTicketDetail,
         hotelTicketDetail,
-        chatBot
+        chatBot,
+        flightStepper
       ];
 }
 
@@ -52,6 +55,11 @@ GoRouter router([String? initialLocation]) => GoRouter(
           path: '/',
           name: AppRouter.auth,
           builder: (context, state) => const IntroductionSlider(),
+        ),
+        GoRoute(
+          path: '/flightStepper',
+          builder: (context, state) => const FlightStepperScreen(),
+          name: AppRouter.flightStepper
         ),
         GoRoute(
           path: '/navigation',

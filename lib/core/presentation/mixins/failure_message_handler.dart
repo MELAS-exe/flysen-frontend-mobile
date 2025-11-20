@@ -10,6 +10,8 @@ mixin FailureMessageHandler {
         context.displayFlash(failure.message);
       case ServerFailure():
         context.displayFlash(failure.message);
+      case AuthFailure():
+        context.displayFlash(failure.message);
     }
   }
 }

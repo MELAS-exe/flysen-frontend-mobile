@@ -6,7 +6,6 @@ import 'package:flysen_frontend_mobile/features/auth/presentation/widgets/intro1
 import 'package:flysen_frontend_mobile/features/auth/presentation/widgets/intro2.dart';
 import 'package:flysen_frontend_mobile/features/auth/presentation/widgets/intro3.dart';
 import 'package:flysen_frontend_mobile/features/auth/presentation/widgets/intro4.dart';
-import 'package:flysen_frontend_mobile/features/auth/presentation/widgets/login_screen.dart';
 import 'package:flysen_frontend_mobile/injector.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -83,28 +82,31 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                showModalBottomSheet(
-                                  showDragHandle: true,
-                                  isScrollControlled: true,
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    // Provide AuthBloc to the LoginScreen
-                                    return BlocProvider.value(
-                                      value: context.read<AuthBloc>(),
-                                      child: Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                          20,
-                                          20,
-                                          20,
-                                          MediaQuery.of(context)
-                                              .viewInsets
-                                              .bottom,
-                                        ),
-                                        child: LoginScreen(),
-                                      ),
-                                    );
-                                  },
+                                context.read<AuthBloc>().add(
+                                  const SignInAnonymouslyRequested(),
                                 );
+                                // showModalBottomSheet(
+                                //   showDragHandle: true,
+                                //   isScrollControlled: true,
+                                //   context: context,
+                                //   builder: (BuildContext context) {
+                                //     // Provide AuthBloc to the LoginScreen
+                                //     return BlocProvider.value(
+                                //       value: context.read<AuthBloc>(),
+                                //       child: Padding(
+                                //         padding: EdgeInsets.fromLTRB(
+                                //           20,
+                                //           20,
+                                //           20,
+                                //           MediaQuery.of(context)
+                                //               .viewInsets
+                                //               .bottom,
+                                //         ),
+                                //         child: LoginScreen(),
+                                //       ),
+                                //     );
+                                //   },
+                                // );
                               },
                               child: Container(
                                 width: 40,
@@ -127,27 +129,6 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
                       ),
                     ),
                   ],
-                ),
-              ),
-              // Anonymous sign-in button
-              Container(
-                alignment: Alignment(0, 0.77),
-                child: GestureDetector(
-                  onTap: () {
-                    // Dispatch anonymous sign-in event
-                    context.read<AuthBloc>().add(
-                      const SignInAnonymouslyRequested(),
-                    );
-                  },
-                  child: Text(
-                    "Continuer sans compte",
-                    style: TextStyle(
-                      color: AppTheme.lightTheme.colorScheme.primary,
-                      fontSize: 16,
-                      decoration: TextDecoration.underline,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
                 ),
               ),
             ],

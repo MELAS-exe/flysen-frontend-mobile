@@ -126,7 +126,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               emit(AuthError(failure.message));
             }
           },
-          (_) => emit(const Unauthenticated()),
+          (_) {
+            emit(const Unauthenticated());},
         );
       },
     );

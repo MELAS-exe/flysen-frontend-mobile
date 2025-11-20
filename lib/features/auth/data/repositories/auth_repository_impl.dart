@@ -120,21 +120,30 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, void>> signOut(String idToken) async {
     try {
-      // Call backend to sign out
+      // Attempt to sign out from the backend.
       await _remoteDataSource.signOut(idToken);
-
-      // Remove user from local storage
+    } on AuthException {
+      // If we get an AuthException (e.g., 403 Forbidden), it means the token
+      // is already invalid. From the app's perspective, the user is effectively
+      // signed out on the backend. We can ignore this error and proceed with
+      // local cleanup.
+      print("here");
       await _localDataSource.removeUser();
-
-      return const Right(null);
     } on ServerException catch (e) {
-      // Even if backend fails, clear local data
+      // For other server errors, we still proceed with local cleanup
+      // but return the failure to let the caller know something went wrong.
       await _localDataSource.removeUser();
       return Left(ServerFailure(message: e.message));
-    } catch (e) {
-      // Even if error, clear local data
+    } on Exception catch (e) {
+      // For any other exception (e.g., network error), we still clean up locally.
       await _localDataSource.removeUser();
       return Left(LocalFailure(message: 'Failed to sign out: ${e.toString()}'));
     }
+
+    // Always remove the user from local storage upon successful or ignored error call.
+    await _localDataSource.removeUser();
+
+    // Return success.
+    return const Right(null);
   }
 }

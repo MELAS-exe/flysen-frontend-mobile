@@ -6,6 +6,7 @@ class CustomTextField extends StatefulWidget {
   String? hintText;
   TextEditingController? controller;
   bool textHidable;
+  bool readOnly;
   bool searchable;
   double? width;
   double? height;
@@ -16,6 +17,7 @@ class CustomTextField extends StatefulWidget {
   CustomTextField({
     this.prefixWidth = 0,
     this.enabled = true,
+    this.readOnly = false,
     this.hintText,
     this.controller,
     this.textHidable = false,
@@ -57,6 +59,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           width: widget.width,
           height: widget.height,
           child: TextField(
+            readOnly: widget.readOnly,
             enabled: widget.enabled,
             controller: widget.controller,
             obscureText: obscureText,

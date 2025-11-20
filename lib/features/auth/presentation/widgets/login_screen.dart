@@ -73,9 +73,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 enabled: !isLoading,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(),
                   GestureDetector(
                     child: TextButton(
                       onPressed: isLoading
