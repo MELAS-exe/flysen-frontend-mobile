@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flysen_frontend_mobile/core/theme/theme.dart';
 import 'package:flysen_frontend_mobile/features/auth/auth.dart';
 import 'package:flysen_frontend_mobile/features/auth/presentation/blocs/bottom_sheet/bottom_sheet_cubit.dart';
 import 'package:flysen_frontend_mobile/features/notification_message/presentation/bloc/notification_bloc.dart';
@@ -75,10 +76,7 @@ class App extends StatelessWidget {
           builder: (context, child) {
             return MaterialApp.router(
               scaffoldMessengerKey: rootScaffoldMessengerKey,
-              theme: ThemeData(
-                useMaterial3: true,
-                fontFamily: GoogleFonts.poppins().fontFamily,
-              ),
+              theme: AppTheme.lightTheme,
               localizationsDelegates: [
                 AppLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,

@@ -11,9 +11,10 @@ sealed class FlightEvent extends Equatable{
 
 class SearchFlights extends FlightEvent {
   final FlightSearchParams params;
-  const SearchFlights(this.params);
+  final Map<String, String> locationNames;
+  const SearchFlights(this.params, this.locationNames);
   @override
-  List<Object> get props => [params];
+  List<Object> get props => [params, locationNames];
 }
 
 class PriceFlight extends FlightEvent {

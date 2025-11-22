@@ -1,7 +1,7 @@
 part of 'flight_bloc.dart';
 
 @immutable
-sealed class FlightState extends Equatable{
+sealed class FlightState extends Equatable {
   const FlightState();
 
   @override
@@ -14,9 +14,15 @@ class FlightLoading extends FlightState {}
 
 class FlightLoaded extends FlightState {
   final List<FlightOffer> flightOffers;
-  const FlightLoaded(this.flightOffers);
+  final Map<String, String> carrierNames;
+  final Map<String, String> locationNames;
+  const FlightLoaded({
+    required this.flightOffers,
+    required this.carrierNames,
+    required this.locationNames,
+  });
   @override
-  List<Object> get props => [flightOffers];
+  List<Object> get props => [flightOffers, carrierNames, locationNames];
 }
 
 class FlightError extends FlightState {

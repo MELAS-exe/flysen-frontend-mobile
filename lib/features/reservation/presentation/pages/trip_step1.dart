@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dash/flutter_dash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flysen_frontend_mobile/app/router/app_router.dart';
 import 'package:flysen_frontend_mobile/core/presentation/widgets/custom_button.dart';
 import 'package:flysen_frontend_mobile/core/presentation/widgets/custom_text_field.dart';
 import 'package:flysen_frontend_mobile/core/presentation/widgets/tab_selector.dart';
 import 'package:flysen_frontend_mobile/core/presentation/widgets/top_bar.dart';
 import 'package:flysen_frontend_mobile/core/theme/theme.dart';
+import 'package:flysen_frontend_mobile/core/utils/dimensions.dart';
 import 'package:flysen_frontend_mobile/features/reservation/domain/entities/flight_search_params.dart';
 import 'package:flysen_frontend_mobile/features/reservation/presentation/bloc/flight/flight_bloc.dart';
-import 'package:flysen_frontend_mobile/features/reservation/presentation/pages/trip_step2.dart';
 import 'package:flysen_frontend_mobile/features/reservation/presentation/widgets/custom_counter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -37,16 +37,14 @@ class _TripStep1State extends State<TripStep1> {
   final DateFormat _displayDateFormat = DateFormat('dd/MM/yyyy');
 
   void incrementAdultCount() {
-    // Wrap the change in setState
     setState(() {
       adultCount++;
     });
   }
 
   void decrementAdultCount() {
-    // Wrap the change in setState
     setState(() {
-      if (adultCount > 1) { // It's good practice to keep at least 1 adult
+      if (adultCount > 1) {
         adultCount--;
       }
     });
@@ -119,21 +117,17 @@ class _TripStep1State extends State<TripStep1> {
     if (picked != null && picked != _selectedDepartureDate) {
       setState(() {
         _selectedDepartureDate = picked;
-        // IMPORTANT: If the arrival date is now before the new departure date, clear it.
         if (_selectedArrivalDate != null &&
             _selectedArrivalDate!.isBefore(picked)) {
           _selectedArrivalDate = null;
-          _arrivalDateController.text = ''; // Clear the text field too
+          _arrivalDateController.text = '';
         }
       });
     }
   }
 
   Future<void> _selectArrivalDate() async {
-    // Use the departure date as the minimum selectable date.
     final firstSelectableDate = _selectedDepartureDate ?? DateTime.now();
-
-    // Determine a valid initial date for the picker.
     DateTime validInitialDate = _selectedArrivalDate ?? firstSelectableDate;
     if (validInitialDate.isBefore(firstSelectableDate)) {
       validInitialDate = firstSelectableDate;
@@ -151,15 +145,13 @@ class _TripStep1State extends State<TripStep1> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
-              primary:
-                  AppTheme.lightTheme.colorScheme.tertiary, // Header background
-              onPrimary: Colors.white, // Header text
-              onSurface: Colors.black, // Body text
+              primary: AppTheme.lightTheme.colorScheme.tertiary,
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: AppTheme
-                    .lightTheme.colorScheme.tertiary, // Button text color
+                foregroundColor: AppTheme.lightTheme.colorScheme.tertiary,
               ),
             ),
             dialogBackgroundColor: Colors.white,
@@ -177,35 +169,34 @@ class _TripStep1State extends State<TripStep1> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: [
-            // Background image
-            Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "Voyager",
-                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 40),
-                  Image.asset("assets/images/plane-1.png", fit: BoxFit.cover),
-                ],
-              ),
+    return BlocListener<FlightBloc, FlightState>(
+      listener: (context, state) {
+        if (state is FlightLoaded) {
+          // When data is loaded, navigate to the next page
+          // Using GoRouter's push will add the new page onto the stack
+          context.pushNamed(AppRouter.tripStep2);
+        } else if (state is FlightError) {
+          // If there's an error, show a snackbar
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.red,
             ),
-            Container(color: Colors.black.withOpacity(0.5)),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 32.w),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                ),
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: TopBar(showBack: true,),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding:
+              EdgeInsets.symmetric(horizontal: 16.w, vertical: 32.w),
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height/1.2,
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -214,14 +205,11 @@ class _TripStep1State extends State<TripStep1> {
                     ),
                     SizedBox(height: 16.h),
                     TabSelector<TripType>(
-                      // Provide the options as a map
                       options: const {
                         TripType.roundTrip: 'Aller-retour',
                         TripType.oneWay: 'Aller-simple',
                       },
-                      // Set the initial selection
                       initialValue: _selectedTripType,
-                      // Handle the change in selection
                       onSelectionChanged: (newSelection) {
                         setState(() {
                           _selectedTripType = newSelection;
@@ -236,10 +224,11 @@ class _TripStep1State extends State<TripStep1> {
                     SizedBox(height: 8.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         CustomTextField(
                           width: MediaQuery.of(context).size.width / 2.7,
-                          height: 60.h,
+                          height: 56.h,
                           hintText: "Départ",
                           controller: _departureLocationController,
                         ),
@@ -248,7 +237,7 @@ class _TripStep1State extends State<TripStep1> {
                               permuteLocation();
                             },
                             child: CircleAvatar(
-                                radius: 16.h,
+                                radius: 16.r,
                                 backgroundColor: Colors.black,
                                 child: Center(
                                   child: Icon(
@@ -258,7 +247,7 @@ class _TripStep1State extends State<TripStep1> {
                                 ))),
                         CustomTextField(
                           width: MediaQuery.of(context).size.width / 2.7,
-                          height: 60.h,
+                          height: 56.h,
                           hintText: "Arrivée",
                           controller: _arrivalLocationController,
                         ),
@@ -280,15 +269,17 @@ class _TripStep1State extends State<TripStep1> {
                             final departureDate = _selectedDepartureDate;
                             if (departureDate != null) {
                               setState(() {
-                                _departureDateController.text = _displayDateFormat.format(departureDate);
+                                _departureDateController.text =
+                                    _displayDateFormat
+                                        .format(departureDate);
                               });
                             }
                           },
                           child: CustomTextField(
                             width: _selectedTripType == TripType.roundTrip
                                 ? MediaQuery.of(context).size.width / 2.25
-                                : MediaQuery.of(context).size.width,
-                            height: 60.h,
+                                : MediaQuery.of(context).size.width / 1.1,
+                            height: 56.h,
                             hintText: "Départ",
                             readOnly: true,
                             controller: _departureDateController,
@@ -303,14 +294,16 @@ class _TripStep1State extends State<TripStep1> {
                               final arrivalDate = _selectedArrivalDate;
                               if (arrivalDate != null) {
                                 setState(() {
-                                  // Format the date for the user to see
-                                  _arrivalDateController.text = _displayDateFormat.format(arrivalDate);
+                                  _arrivalDateController.text =
+                                      _displayDateFormat
+                                          .format(arrivalDate);
                                 });
                               }
                             },
                             child: CustomTextField(
-                              width: MediaQuery.of(context).size.width / 2.25,
-                              height: 60.h,
+                              width:
+                                  MediaQuery.of(context).size.width / 2.25,
+                              height: 56.h,
                               hintText: "Arrivée",
                               controller: _arrivalDateController,
                               readOnly: true,
@@ -375,73 +368,119 @@ class _TripStep1State extends State<TripStep1> {
                             label: infantCount),
                       ],
                     ),
-                    SizedBox(height: 32.h),
-                    CustomButton(
-                      width: MediaQuery.of(context).size.width,
-                      height: 60,
-                      text: "Voir offre",
-                      onPressed: () {
-                        List<Traveler> travelers = [];
-                        int travelerId = 1;
-                        for (int i = 0; i < adultCount; i++) {
-                          travelers.add(Traveler(id: travelerId.toString(), travelerType: 'ADULT'));
-                          travelerId++;
+                    SizedBox(height: 32.h,),
+                    BlocBuilder<FlightBloc, FlightState>(
+                      builder: (context, state) {
+                        // Show loading indicator inside the button when loading
+                        if (state is FlightLoading) {
+                          return Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              CustomButton(
+                                width: MediaQuery.of(context).size.width,
+                                height: 48.h,
+                                text: "",
+                                onPressed: () {},
+                              ),
+                              Center(
+                                  child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ))
+                            ],
+                          );
                         }
-                        for (int i = 0; i < childCount; i++) {
-                          travelers.add(Traveler(id: travelerId.toString(), travelerType: 'CHILD'));
-                          travelerId++;
-                        }
-                        for (int i = 0; i < infantCount; i++) {
-                          travelers.add(Traveler(id: travelerId.toString(), travelerType: 'INFANT'));
-                          travelerId++;
-                        }
+                        // Default button state
+                        return CustomButton(
+                          width: MediaQuery.of(context).size.width,
+                          height: 48.h,
+                          text: "Voir les offres",
+                          onPressed: () {
+                            List<Traveler> travelers = [];
+                            int travelerId = 1;
+                            for (int i = 0; i < adultCount; i++) {
+                              travelers.add(Traveler(
+                                  id: travelerId.toString(),
+                                  travelerType: 'ADULT'));
+                              travelerId++;
+                            }
+                            for (int i = 0; i < childCount; i++) {
+                              travelers.add(Traveler(
+                                  id: travelerId.toString(),
+                                  travelerType: 'CHILD'));
+                              travelerId++;
+                            }
+                            for (int i = 0; i < infantCount; i++) {
+                              travelers.add(Traveler(
+                                  id: travelerId.toString(),
+                                  travelerType: 'INFANT'));
+                              travelerId++;
+                            }
 
-                        FlightSearchParams params = FlightSearchParams(
-                          currencyCode: 'XOF',
-                          originDestinations: [],
-                          travelers: travelers,
-                          sources: const ['GDS'],
-                          searchCriteria: const SearchCriteria(maxFlightOffers: 20),
+                            final originLocationCode =
+                            _departureLocationController.text
+                                .trim()
+                                .toUpperCase();
+                            final destinationLocationCode =
+                            _arrivalLocationController.text
+                                .trim()
+                                .toUpperCase();
+
+                            // Create the map of IATA codes to user-friendly names
+                            final Map<String, String> friendlyLocationNames = {
+                              originLocationCode: _departureLocationController.text.trim(),
+                              destinationLocationCode: _arrivalLocationController.text.trim(),
+                            };
+
+                            FlightSearchParams params = FlightSearchParams(
+                              currencyCode: 'XOF',
+                              originDestinations: [],
+                              travelers: travelers,
+                              sources: const ['GDS'],
+                              searchCriteria:
+                              const SearchCriteria(maxFlightOffers: 20),
+                            );
+
+                            params.originDestinations.add(OriginDestination(
+                              id: '1',
+                              originLocationCode: originLocationCode,
+                              destinationLocationCode:
+                              destinationLocationCode,
+                              departureDateTimeRange:
+                              DepartureDateTimeRange(
+                                  date: _selectedDepartureDate != null
+                                      ? _apiDateFormat.format(
+                                      _selectedDepartureDate!)
+                                      : ''),
+                            ));
+
+                            if (_selectedTripType == TripType.roundTrip) {
+                              params.originDestinations
+                                  .add(OriginDestination(
+                                id: '2',
+                                originLocationCode: destinationLocationCode,
+                                destinationLocationCode: originLocationCode,
+                                departureDateTimeRange:
+                                DepartureDateTimeRange(
+                                    date: _selectedArrivalDate != null
+                                        ? _apiDateFormat.format(
+                                        _selectedArrivalDate!)
+                                        : ''),
+                              ));
+                            }
+
+                            // Dispatch the event with both the params and the friendly names map
+                            context
+                                .read<FlightBloc>()
+                                .add(SearchFlights(params, friendlyLocationNames));
+                          },
                         );
-
-                        final originLocationCode = _departureLocationController.text.trim().toUpperCase();
-                        final destinationLocationCode = _arrivalLocationController.text.trim().toUpperCase();
-
-                        // Departure flight
-                        params.originDestinations.add(OriginDestination(
-                          id: '1',
-                          originLocationCode: originLocationCode,
-                          destinationLocationCode: destinationLocationCode,
-                          departureDateTimeRange: DepartureDateTimeRange(date: _selectedDepartureDate != null
-                              ? _apiDateFormat.format(_selectedDepartureDate!)
-                              : '',),
-                        ));
-
-                        // Return flight, if round trip
-                        if(_selectedTripType == TripType.roundTrip){
-                          params.originDestinations.add(OriginDestination(
-                            id: '2',
-                            originLocationCode: destinationLocationCode,
-                            destinationLocationCode: originLocationCode,
-                            departureDateTimeRange: DepartureDateTimeRange(date: _selectedArrivalDate != null
-                                ? _apiDateFormat.format(_selectedArrivalDate!)
-                                : ''),
-                          ));
-                        }
-                        context.read<FlightBloc>().add(SearchFlights(params));
                       },
                     ),
                   ],
                 ),
               ),
             ),
-            Positioned(
-              top: 40,
-              left: 0,
-              right: 0,
-              child: TopBar(showBack: true),
-            ),
-          ],
+          ),
         ),
       ),
     );

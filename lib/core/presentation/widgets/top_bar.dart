@@ -7,8 +7,9 @@ import 'package:lottie/lottie.dart';
 class TopBar extends StatefulWidget implements PreferredSizeWidget {
   final bool showBack;
   final bool showChatbot;
+  final String? title;
 
-  TopBar({this.showChatbot = true, this.showBack = false});
+  TopBar({this.showChatbot = true, this.showBack = false, this.title});
   @override
   State<TopBar> createState() => _TopBarState();
 
@@ -19,7 +20,10 @@ class TopBar extends StatefulWidget implements PreferredSizeWidget {
 class _TopBarState extends State<TopBar> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   @override
-  void initState() { super.initState(); _controller = AnimationController(vsync: this); }
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this);
+  }
 
   @override
   void dispose() {
@@ -30,9 +34,17 @@ class _TopBarState extends State<TopBar> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      centerTitle: true,
       automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
       elevation: 0,
+      title: Text(
+        widget.title ?? '',
+        style: Theme.of(context)
+            .textTheme
+            .bodyMedium
+            ?.copyWith(fontWeight: FontWeight.bold),
+      ),
       leading: widget.showBack
           ? Padding(
               padding: const EdgeInsets.all(8.0),
@@ -45,14 +57,11 @@ class _TopBarState extends State<TopBar> with SingleTickerProviderStateMixin {
                     Navigator.pop(context);
                   }
                 },
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.w),
-                    child:
-                        Center(child: Image.asset("assets/icons/less-than.png", width: 16.w,)),
-                  ),
-                ),
+                child: Center(
+                    child: Image.asset(
+                  "assets/icons/less-than.png",
+                  width: 24.r,
+                )),
               ),
             )
           : null,
@@ -64,9 +73,12 @@ class _TopBarState extends State<TopBar> with SingleTickerProviderStateMixin {
             },
             child: Lottie.asset(
               'assets/icons/chatBot.json',
-              width: 40.w,
+              width: 48.r,
               controller: _controller,
-              onLoaded: (composition) { _controller.duration = composition.duration; _controller.value = 0; },
+              onLoaded: (composition) {
+                _controller.duration = composition.duration;
+                _controller.value = 0;
+              },
             ),
           ),
         SizedBox(width: 16.w), // To match original horizontal padding

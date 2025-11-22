@@ -37,7 +37,7 @@ class _ReservateState extends State<Reservate> {
             child: Row(
               children: [
                 GestureDetector(
-                  onTap: () => context.pushNamed(AppRouter.tripStep2),
+                  onTap: () => context.pushNamed(AppRouter.tripStep1),
                   child: Image.asset("assets/images/travel-button.png",
                       width: MediaQuery.of(context).size.width / 2.4),
                 ),

@@ -127,8 +127,6 @@ class AuthRepositoryImpl implements AuthRepository {
       // is already invalid. From the app's perspective, the user is effectively
       // signed out on the backend. We can ignore this error and proceed with
       // local cleanup.
-      print("here");
-      await _localDataSource.removeUser();
     } on ServerException catch (e) {
       // For other server errors, we still proceed with local cleanup
       // but return the failure to let the caller know something went wrong.
@@ -139,8 +137,6 @@ class AuthRepositoryImpl implements AuthRepository {
       await _localDataSource.removeUser();
       return Left(LocalFailure(message: 'Failed to sign out: ${e.toString()}'));
     }
-
-    // Always remove the user from local storage upon successful or ignored error call.
     await _localDataSource.removeUser();
 
     // Return success.

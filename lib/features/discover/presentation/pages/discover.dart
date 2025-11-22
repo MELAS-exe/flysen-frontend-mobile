@@ -30,10 +30,10 @@ class _DiscoverState extends State<Discover> {
       create: (context) => getIt<DiscoverBloc>()..add(const LoadDestinations()),
       child: BlocListener<DiscoverBloc, DiscoverState>(
         listener: (context, state) {
-          // if (state is DiscoverAuthenticationError) {
-          //   context.read<AuthBloc>().add(const SignOutRequested());
-          //   context.goNamed(AppRouter.auth);
-          // }
+          if (state is DiscoverAuthenticationError) {
+            context.read<AuthBloc>().add(const SignOutRequested());
+            context.goNamed(AppRouter.auth);
+          }
         },
         child: _DiscoverView(),
       ),
@@ -51,17 +51,6 @@ class _DiscoverView extends StatelessWidget {
         SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                children: [
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Image.asset(
-                    "assets/icons/app-logo.png",
-                    width: 120,
-                  ),
-                ],
-              ),
               SizedBox(
                 height: 20,
               ),
@@ -118,16 +107,6 @@ class _DiscoverView extends StatelessWidget {
 
                     return Column(
                       children: [
-                        // Event widget
-                        // Event(
-                        //   image: Image.asset(
-                        //     "assets/event.jpg",
-                        //     fit: BoxFit.fill,
-                        //   ),
-                        //   title: "Festival de musique de Kédougou",
-                        //   region: "Kédougou",
-                        //   duration: "3 jours restants",
-                        // ),
                         SizedBox(
                           height: 20,
                         ),
@@ -181,12 +160,6 @@ class _DiscoverView extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: TopBar(),
-          ),
-        )
       ],
     );
   }

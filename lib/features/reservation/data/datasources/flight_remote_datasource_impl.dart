@@ -4,6 +4,7 @@ import 'package:flysen_frontend_mobile/core/domain/failures/exceptions.dart';
 import 'package:flysen_frontend_mobile/features/reservation/data/models/flight_reponse_model.dart';
 import 'package:flysen_frontend_mobile/features/reservation/data/datasources/flight_remote_datasource.dart';
 import 'package:flysen_frontend_mobile/features/reservation/data/models/flight_offer_model.dart';
+import 'package:flysen_frontend_mobile/features/reservation/data/models/flight_search_response_wrapper.dart';
 import 'package:flysen_frontend_mobile/features/reservation/domain/entities/flight_price_params.dart';
 import 'package:flysen_frontend_mobile/features/reservation/domain/entities/flight_search_params.dart';
 import 'package:http/http.dart' as http;
@@ -20,7 +21,7 @@ class FlightRemoteDataSourceImpl implements FlightRemoteDataSource {
       );
 
   @override
-  Future<List<FlightOfferModel>> getFlights(
+  Future<FlightSearchResponseWrapper> getFlights(
       FlightSearchParams params, String authToken) async {
     try {
       final uri = Uri.parse('$_baseUrl/flights/get_flights/');
@@ -29,13 +30,6 @@ class FlightRemoteDataSourceImpl implements FlightRemoteDataSource {
         'Authorization': 'Bearer $authToken',
       };
       final body = json.encode(params.toJson());
-
-      // print('--- HTTP Request ---');
-      // print('URL: $uri');
-      // print('Method: POST');
-      // print('Headers: $headers');
-      // print('Body: $body');
-      // print('--------------------');
 
       final response = await _client.post(
         uri,
@@ -49,10 +43,25 @@ class FlightRemoteDataSourceImpl implements FlightRemoteDataSource {
 
         if (jsonResponse.containsKey('data')) {
           final dataList = jsonResponse['data'] as List;
-          return dataList
+          final flightOffers = dataList
               .map((item) =>
               FlightOfferModel.fromJson(item as Map<String, dynamic>))
               .toList();
+
+          // --- EXTRACT CARRIER NAMES HERE ---
+          final Map<String, dynamic>? dictionaries =
+          jsonResponse['dictionaries'] as Map<String, dynamic>?;
+          final Map<String, String> carrierNames =
+          dictionaries != null && dictionaries.containsKey('carriers')
+              ? Map<String, String>.from(dictionaries['carriers'] as Map<String, dynamic>)
+              : {};
+
+          // Return the wrapper object with both pieces of data
+          return FlightSearchResponseWrapper(
+            flightOffers: flightOffers,
+            carrierNames: carrierNames,
+          );
+
         } else {
           throw ServerException(
               message: 'Format de réponse invalide : clé "data" manquante');
@@ -65,8 +74,7 @@ class FlightRemoteDataSourceImpl implements FlightRemoteDataSource {
     } catch (e) {
       if (e is ServerException) rethrow;
       throw ServerException(
-          message:
-          'Erreur réseau durant la recherche de vols: ${e.toString()}');
+          message: 'Erreur réseau durant la recherche de vols: ${e.toString()}');
     }
   }
 

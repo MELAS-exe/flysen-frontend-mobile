@@ -20,8 +20,8 @@ class _CustomCounterState extends State<CustomCounter> {
   Widget build(BuildContext context) {
     return Container(
         width: 160.w,
-        height: 60,
-        padding: EdgeInsets.only(right: 20, left: 20),
+        height: 56.h,
+        padding: EdgeInsets.only(right: 16.w, left: 16.w),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.circular(200),
@@ -32,7 +32,7 @@ class _CustomCounterState extends State<CustomCounter> {
           GestureDetector(
             onTap: widget.decrement,
             child: CircleAvatar(
-              radius: 20,
+              radius: 16.r,
               backgroundColor: Colors.black,
               child: Padding(
                 padding: EdgeInsets.all(10),
@@ -45,7 +45,7 @@ class _CustomCounterState extends State<CustomCounter> {
           GestureDetector(
             onTap: widget.increment,
             child: CircleAvatar(
-              radius: 20,
+              radius: 16.r,
               backgroundColor: Colors.black,
               child: Padding(
                 padding: EdgeInsets.all(10),

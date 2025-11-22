@@ -10,6 +10,10 @@ import 'package:flysen_frontend_mobile/features/reservation/domain/entities/flig
 import 'package:flysen_frontend_mobile/features/reservation/domain/repositories/flight_repository.dart';
 import 'package:injectable/injectable.dart';
 
+// --- Import the new wrapper from the data layer ---
+import 'package:flysen_frontend_mobile/features/reservation/data/models/flight_search_response_wrapper.dart';
+
+
 @LazySingleton(as: FlightRepository)
 class ReservationRepositoryImpl implements FlightRepository {
   final FlightRemoteDataSource remoteDataSource;
@@ -21,7 +25,7 @@ class ReservationRepositoryImpl implements FlightRepository {
   });
 
   @override
-  Future<Either<Failure, List<FlightOffer>>> getFlights(
+  Future<Either<Failure, FlightSearchResponseWrapper>> getFlights(
       FlightSearchParams params) async {
     try {
       // Obtenir le token d'authentification
@@ -33,9 +37,12 @@ class ReservationRepositoryImpl implements FlightRepository {
           if (user == null) {
             return Left(ServerFailure(message: 'Utilisateur non authentifié'));
           }
-          final flightOfferModels =
+          // --- The data source now returns the wrapper object ---
+          final responseWrapper =
           await remoteDataSource.getFlights(params, user.idToken);
-          return Right(flightOfferModels);
+
+          // --- Return the wrapper directly ---
+          return Right(responseWrapper);
         },
       );
     } on ServerException catch (e) {

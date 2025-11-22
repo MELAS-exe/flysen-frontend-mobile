@@ -25,7 +25,6 @@ class FlightBloc extends Bloc<FlightEvent, FlightState> {
 
   Future<void> _onPriceFlight(
       PriceFlight event, Emitter<FlightState> emit) async {
-    // Garder les anciens résultats en fond pour une UI plus fluide
     final currentState = state;
     if (currentState is FlightLoaded) {
       emit(FlightPriceLoading(currentState.flightOffers));
@@ -55,16 +54,26 @@ class FlightBloc extends Bloc<FlightEvent, FlightState> {
     emit(FlightLoading());
     final result = await getFlightsUseCase(event.params);
     result.fold(
-      (failure) {
+          (failure) {
         if (failure is ServerFailure) {
           emit(FlightError(failure.message));
+        } else if (failure is LocalFailure) {
+          emit(FlightError(failure.message));
         }
-
-        if (failure is LocalFailure) {
+        else {
           emit(FlightError(failure.message));
         }
       },
-      (flightOffers) => emit(FlightLoaded(flightOffers)),
+          (responseWrapper) {
+            final allLocationNames = {...event.locationNames};
+            emit(
+              FlightLoaded(
+                flightOffers: responseWrapper.flightOffers,
+                carrierNames: responseWrapper.carrierNames,
+                locationNames: allLocationNames, // Pass the map to the state
+              ),
+            );
+          }
     );
   }
 }

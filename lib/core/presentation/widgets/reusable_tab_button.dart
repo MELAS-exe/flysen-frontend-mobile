@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReusableTabButton<T> extends StatelessWidget {
   const ReusableTabButton({
@@ -8,7 +9,7 @@ class ReusableTabButton<T> extends StatelessWidget {
     required this.groupValue,
     required this.onChanged,
     this.width = 100,
-    this.height = 30,
+    this.height = 32,
     this.selectedColor = Colors.black,
     this.unselectedColor = Colors.white,
     this.selectedTextColor = Colors.white,
@@ -57,9 +58,8 @@ class ReusableTabButton<T> extends StatelessWidget {
         child: Center(
           child: Text(
             title,
-            style: TextStyle(
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: isSelected ? selectedTextColor : unselectedTextColor,
-              fontSize: 12,
               fontWeight: FontWeight.bold,
             ),
           ),
