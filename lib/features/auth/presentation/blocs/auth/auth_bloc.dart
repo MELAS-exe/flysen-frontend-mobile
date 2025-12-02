@@ -13,6 +13,7 @@ import 'package:flysen_frontend_mobile/features/auth/domain/entities/sign_in_par
 import 'package:flysen_frontend_mobile/features/auth/domain/entities/sign_up_params.dart';
 import 'package:flysen_frontend_mobile/features/auth/domain/entities/user.dart';
 import 'package:flysen_frontend_mobile/features/auth/domain/usecases/get_current_user.dart';
+import 'package:flysen_frontend_mobile/features/auth/domain/usecases/refresh_token.dart';
 import 'package:flysen_frontend_mobile/features/auth/domain/usecases/sign_in.dart';
 import 'package:flysen_frontend_mobile/features/auth/domain/usecases/sign_in_anonymously.dart';
 import 'package:flysen_frontend_mobile/features/auth/domain/usecases/sign_out.dart';
@@ -30,6 +31,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInAnonymously _signInAnonymously;
   final SignOut _signOut;
   final GetCurrentUser _getCurrentUser;
+  final RefreshToken _refreshToken;
 
   AuthBloc(
     this._signIn,
@@ -37,6 +39,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._signInAnonymously,
     this._signOut,
     this._getCurrentUser,
+    this._refreshToken,
   ) : super(const AuthInitial()) {
     on<SignInRequested>(_onSignInRequested);
     on<SignUpRequested>(_onSignUpRequested);
@@ -44,6 +47,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignOutRequested>(_onSignOutRequested);
     on<CheckAuthStatus>(_onCheckAuthStatus);
     on<GetCurrentUserRequested>(_onGetCurrentUserRequested);
+    on<RefreshTokenRequested>(_onRefreshTokenRequest);
+  }
+
+  Future<void> _onRefreshTokenRequest(
+      RefreshTokenRequested event, Emitter<AuthState> emit) async {
+    emit(const AuthLoading());
+    final result = await _refreshToken(NoParams());
+    result.fold(
+      (failure) => emit(AuthError(failure.message)),
+      (user) => emit(Authenticated(user)),
+    );
   }
 
   Future<void> _onSignInRequested(
@@ -127,7 +141,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             }
           },
           (_) {
-            emit(const Unauthenticated());},
+            emit(const Unauthenticated());
+          },
         );
       },
     );

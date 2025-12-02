@@ -24,7 +24,8 @@ class _HistoryState extends State<History> {
                       SizedBox(width: 20),
                       Text(
                         "Mes voyages et séjours",
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -50,7 +51,8 @@ class _HistoryState extends State<History> {
                             child: Text(
                               "Voyages",
                               style: TextStyle(
-                                color: _value == 1 ? Colors.white : Colors.black,
+                                color:
+                                    _value == 1 ? Colors.white : Colors.black,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -77,7 +79,8 @@ class _HistoryState extends State<History> {
                             child: Text(
                               "Sejours",
                               style: TextStyle(
-                                color: _value == 2 ? Colors.white : Colors.black,
+                                color:
+                                    _value == 2 ? Colors.white : Colors.black,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -90,59 +93,76 @@ class _HistoryState extends State<History> {
                   SizedBox(height: 40),
                   if (_value == 1) ...[
                     ReservationCard(
-                      onTap: () => Navigator.pushNamed(context, "/ticket_voyage_detail"),
+                      onTap: () =>
+                          Navigator.pushNamed(context, "/ticket_voyage_detail"),
                       airlineLogo: Image.asset("assets/air-senegal.png"),
                       arilineName: "Air Sénégal",
                       nombrePersonne: 3,
                       dateDepart: DateTime.now(),
                     ),
-                    SizedBox(height: 40,),
+                    SizedBox(
+                      height: 40,
+                    ),
                     ReservationCard(
-                      onTap: () => Navigator.pushNamed(context, "/ticket_voyage_detail"),
+                      onTap: () =>
+                          Navigator.pushNamed(context, "/ticket_voyage_detail"),
                       airlineLogo: Image.asset("assets/air-senegal.png"),
                       arilineName: "Air Sénégal",
                       nombrePersonne: 3,
                       dateDepart: DateTime.now(),
                     ),
-                    SizedBox(height: 40,),
+                    SizedBox(
+                      height: 40,
+                    ),
                     ReservationCard(
-                      onTap: () => Navigator.pushNamed(context, "/ticket_voyage_detail"),
+                      onTap: () =>
+                          Navigator.pushNamed(context, "/ticket_voyage_detail"),
                       airlineLogo: Image.asset("assets/air-senegal.png"),
                       arilineName: "Air Sénégal",
                       nombrePersonne: 3,
                       dateDepart: DateTime.now(),
                     ),
-                    SizedBox(height: 40,),
-                  ] else
-                    ...[
-                      ReservationCard(
-                        onTap: () => Navigator.pushNamed(context, "/ticket_hotel_detail"),
-                        airlineLogo: Image.asset("assets/RadissonLogo.png"),
-                        arilineName: "Radisson Blu Hotel",
-                        nombrePersonne: 3,
-                        isHotel: true,
-                        dateDepart: DateTime.now(),
-                      ),
-                      SizedBox(height: 40,),
-                      ReservationCard(
-                        onTap: () => Navigator.pushNamed(context, "/ticket_hotel_detail"),
-                        airlineLogo: Image.asset("assets/RadissonLogo.png"),
-                        arilineName: "Radisson Blu Hotel",
-                        nombrePersonne: 3,
-                        isHotel: true,
-                        dateDepart: DateTime.now(),
-                      ),
-                      SizedBox(height: 40,),
-                      ReservationCard(
-                        onTap: () => Navigator.pushNamed(context, "/ticket_hotel_detail"),
-                        airlineLogo: Image.asset("assets/RadissonLogo.png"),
-                        arilineName: "Radisson Blu Hotel",
-                        nombrePersonne: 3,
-                        isHotel: true,
-                        dateDepart: DateTime.now(),
-                      ),
-                      SizedBox(height: 40,),
-                    ],
+                    SizedBox(
+                      height: 40,
+                    ),
+                  ] else ...[
+                    ReservationCard(
+                      onTap: () =>
+                          Navigator.pushNamed(context, "/ticket_hotel_detail"),
+                      airlineLogo: Image.asset("assets/RadissonLogo.png"),
+                      arilineName: "Radisson Blu Hotel",
+                      nombrePersonne: 3,
+                      isHotel: true,
+                      dateDepart: DateTime.now(),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    ReservationCard(
+                      onTap: () =>
+                          Navigator.pushNamed(context, "/ticket_hotel_detail"),
+                      airlineLogo: Image.asset("assets/RadissonLogo.png"),
+                      arilineName: "Radisson Blu Hotel",
+                      nombrePersonne: 3,
+                      isHotel: true,
+                      dateDepart: DateTime.now(),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    ReservationCard(
+                      onTap: () =>
+                          Navigator.pushNamed(context, "/ticket_hotel_detail"),
+                      airlineLogo: Image.asset("assets/RadissonLogo.png"),
+                      arilineName: "Radisson Blu Hotel",
+                      nombrePersonne: 3,
+                      isHotel: true,
+                      dateDepart: DateTime.now(),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                  ],
                 ],
               ),
             ),

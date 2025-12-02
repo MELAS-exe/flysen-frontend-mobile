@@ -11,16 +11,14 @@ class Otp extends StatefulWidget {
 }
 
 class _OtpState extends State<Otp> {
-
   final TextEditingController code = TextEditingController();
   bool pressed = false;
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: [     
+      children: [
         Text(
           "Vérification",
           style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
@@ -31,7 +29,9 @@ class _OtpState extends State<Otp> {
           style: TextStyle(fontSize: 16, color: Colors.grey),
         ),
         SizedBox(height: 40),
-        CustomTextField(controller: code,),
+        CustomTextField(
+          controller: code,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -44,8 +44,7 @@ class _OtpState extends State<Otp> {
                       color: AppTheme.lightTheme.colorScheme.secondary,
                       decoration: TextDecoration.underline,
                       fontWeight: FontWeight.w700,
-                      fontSize: 14
-                  ),
+                      fontSize: 14),
                 ),
               ),
             ),
@@ -53,8 +52,14 @@ class _OtpState extends State<Otp> {
           ],
         ),
         SizedBox(height: 80),
-        if (pressed && (code.text.isEmpty)) Text("Veuillez remplir tous les champs",style: TextStyle(color: Colors.red),),
-        SizedBox(height: 20,),
+        if (pressed && (code.text.isEmpty))
+          Text(
+            "Veuillez remplir tous les champs",
+            style: TextStyle(color: Colors.red),
+          ),
+        SizedBox(
+          height: 20,
+        ),
         CustomButton(
           width: MediaQuery.of(context).size.width,
           height: 60,
@@ -83,9 +88,8 @@ class _OtpState extends State<Otp> {
               context: context,
               builder: (BuildContext context) {
                 return Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20,
-                      MediaQuery.of(context).viewInsets.bottom
-                  ),
+                  padding: EdgeInsets.fromLTRB(
+                      20, 20, 20, MediaQuery.of(context).viewInsets.bottom),
                   child: LoginScreen(),
                 );
               },
@@ -94,7 +98,9 @@ class _OtpState extends State<Otp> {
           child: RichText(
             text: TextSpan(
               text: "Déjà inscrit?",
-              style: TextStyle(color: AppTheme.lightTheme.colorScheme.secondary, fontSize: 14),
+              style: TextStyle(
+                  color: AppTheme.lightTheme.colorScheme.secondary,
+                  fontSize: 14),
               children: [
                 TextSpan(
                   text: " Connectez vous",
@@ -109,7 +115,9 @@ class _OtpState extends State<Otp> {
             ),
           ),
         ),
-        SizedBox(height: 40,)
+        SizedBox(
+          height: 40,
+        )
       ],
     );
   }

@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'package:flysen_frontend_mobile/core/domain/failures/exceptions.dart';
 import 'package:flysen_frontend_mobile/features/discover/data/datasources/discover_remote_datasource.dart';
 import 'package:flysen_frontend_mobile/features/discover/data/models/destination_model.dart';
+import 'package:flysen_frontend_mobile/features/discover/data/models/event_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 
@@ -19,9 +20,71 @@ class DiscoverRemoteDataSourceImpl implements DiscoverRemoteDataSource {
   final String _baseUrl;
 
   DiscoverRemoteDataSourceImpl(
-      this._client,
-      @Named('discoverBaseUrl') this._baseUrl,
+    this._client,
+    @Named('discoverBaseUrl') this._baseUrl,
+  );
+
+  @override
+  Future<List<EventModel>> getFeaturedEvents(
+      {int limit = 5, required String token}) async {
+    final response = await _client.get(
+      Uri.parse('$_baseUrl/events/featured?limit=$limit'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final decodedResponse = json.decode(response.body);
+      // The events are inside the 'data' key
+      final List<dynamic> eventList = decodedResponse['data'] as List<dynamic>;
+      return eventList
+          .map((json) => EventModel.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } else {
+      throw ServerException(message: 'Failed to load featured events');
+    }
+  }
+
+  @override
+  Future<List<DestinationModel>> searchDestinations(
+      {required String query, required String token}) async {
+    try {
+      final response = await _client.get(
+        Uri.parse('$_baseUrl/destinations/search?query=$query'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
       );
+
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(utf8.decode(response.bodyBytes))
+            as Map<String, dynamic>;
+        final dataList = jsonResponse['data'] as List;
+        return dataList
+            .map((item) =>
+                DestinationModel.fromJson(item as Map<String, dynamic>))
+            .toList();
+      } else if (response.statusCode == 403) {
+        // Lève une exception spécifique pour l'erreur 403
+        throw AuthException(message: 'Accès non autorisé ou token expiré');
+      } else {
+        // Gère les autres erreurs serveur
+        throw ServerException(
+          message:
+              'Échec du chargement de la page Découvrir: ${response.statusCode}',
+        );
+      }
+    } catch (e) {
+      if (e is ServerException || e is AuthException) {
+        rethrow; // Fait remonter l'exception personnalisée
+      }
+      // Gère les erreurs réseau (pas de connexion, etc.)
+      throw ServerException(message: 'Erreur réseau: ${e.toString()}');
+    }
+  }
 
   @override
   Future<List<DestinationModel>> getDestinations({
@@ -35,8 +98,8 @@ class DiscoverRemoteDataSourceImpl implements DiscoverRemoteDataSource {
         if (lastDocumentId != null) 'lastDocumentId': lastDocumentId,
       };
 
-      final uri =
-      Uri.parse('$_baseUrl/destinations').replace(queryParameters: queryParams);
+      final uri = Uri.parse('$_baseUrl/destinations')
+          .replace(queryParameters: queryParams);
 
       final response = await _client.get(
         uri,
@@ -47,12 +110,12 @@ class DiscoverRemoteDataSourceImpl implements DiscoverRemoteDataSource {
       );
 
       if (response.statusCode == 200) {
-        final jsonResponse =
-        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+        final jsonResponse = json.decode(utf8.decode(response.bodyBytes))
+            as Map<String, dynamic>;
         final dataList = jsonResponse['data'] as List;
         return dataList
             .map((item) =>
-            DestinationModel.fromJson(item as Map<String, dynamic>))
+                DestinationModel.fromJson(item as Map<String, dynamic>))
             .toList();
       } else if (response.statusCode == 403) {
         // Lève une exception spécifique pour l'erreur 403
@@ -61,7 +124,7 @@ class DiscoverRemoteDataSourceImpl implements DiscoverRemoteDataSource {
         // Gère les autres erreurs serveur
         throw ServerException(
           message:
-          'Échec du chargement de la page Découvrir: ${response.statusCode}',
+              'Échec du chargement de la page Découvrir: ${response.statusCode}',
         );
       }
     } catch (e) {

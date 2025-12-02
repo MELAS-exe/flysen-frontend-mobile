@@ -80,24 +80,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: isLoading
                           ? null
                           : () {
-                        Navigator.pop(context);
-                        showModalBottomSheet(
-                          showDragHandle: true,
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                20,
-                                20,
-                                20,
-                                MediaQuery.of(context).viewInsets.bottom,
-                              ),
-                              child: ChangePassword1(),
-                            );
-                          },
-                        );
-                      },
+                              Navigator.pop(context);
+                              showModalBottomSheet(
+                                showDragHandle: true,
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                      20,
+                                      20,
+                                      20,
+                                      MediaQuery.of(context).viewInsets.bottom,
+                                    ),
+                                    child: ChangePassword1(),
+                                  );
+                                },
+                              );
+                            },
                       child: Text(
                         "Mot de passe oublié?",
                         style: TextStyle(
@@ -135,11 +135,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     // Dispatch sign-in event to AuthBloc
                     context.read<AuthBloc>().add(
-                      SignInRequested(
-                        email: email.text.trim(),
-                        password: password.text,
-                      ),
-                    );
+                          SignInRequested(
+                            email: email.text.trim(),
+                            password: password.text,
+                          ),
+                        );
                   },
                 ),
               SizedBox(height: 20),
@@ -147,24 +147,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTap: isLoading
                     ? null
                     : () {
-                  Navigator.pop(context);
-                  showModalBottomSheet(
-                    showDragHandle: true,
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Padding(
-                        padding: EdgeInsets.fromLTRB(
-                          20,
-                          20,
-                          20,
-                          MediaQuery.of(context).viewInsets.bottom,
-                        ),
-                        child: RegisterScreen(),
-                      );
-                    },
-                  );
-                },
+                        Navigator.pop(context);
+                        showModalBottomSheet(
+                          showDragHandle: true,
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                20,
+                                20,
+                                20,
+                                MediaQuery.of(context).viewInsets.bottom,
+                              ),
+                              child: RegisterScreen(),
+                            );
+                          },
+                        );
+                      },
                 child: RichText(
                   text: TextSpan(
                     text: "Pas de compte?",

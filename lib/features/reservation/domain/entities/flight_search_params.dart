@@ -27,13 +27,8 @@ class FlightSearchParams extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-    currencyCode,
-    originDestinations,
-    travelers,
-    sources,
-    searchCriteria
-  ];
+  List<Object?> get props =>
+      [currencyCode, originDestinations, travelers, sources, searchCriteria];
 }
 
 class OriginDestination extends Equatable {
@@ -50,19 +45,15 @@ class OriginDestination extends Equatable {
   });
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'originLocationCode': originLocationCode,
-    'destinationLocationCode': destinationLocationCode,
-    'departureDateTimeRange': departureDateTimeRange.toJson(),
-  };
+        'id': id,
+        'originLocationCode': originLocationCode,
+        'destinationLocationCode': destinationLocationCode,
+        'departureDateTimeRange': departureDateTimeRange.toJson(),
+      };
 
   @override
-  List<Object?> get props => [
-    id,
-    originLocationCode,
-    destinationLocationCode,
-    departureDateTimeRange
-  ];
+  List<Object?> get props =>
+      [id, originLocationCode, destinationLocationCode, departureDateTimeRange];
 }
 
 class DepartureDateTimeRange extends Equatable {

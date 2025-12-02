@@ -1,4 +1,3 @@
-
 import 'package:dartz/dartz.dart';
 import 'package:flysen_frontend_mobile/core/domain/failures/failure.dart';
 import 'package:flysen_frontend_mobile/features/notification_message/data/datasources/notification_datasource.dart';
@@ -35,5 +34,6 @@ class NotificationRepositoryImpl implements NotificationRepository {
 
   @override
   // TODO: implement onMessageOpenedApp
-  Stream<NotificationMessage> get onMessageOpenedApp => throw UnimplementedError();
+  Stream<NotificationMessage> get onMessageOpenedApp =>
+      throw UnimplementedError();
 }

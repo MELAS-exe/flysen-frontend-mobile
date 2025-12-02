@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-class Destination extends Equatable {
-  const Destination({
+class DestinationEntity extends Equatable {
+  const DestinationEntity({
     required this.id,
     required this.name,
     required this.region,
@@ -51,29 +51,29 @@ class Destination extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    name,
-    region,
-    nearestAirportId,
-    nearestAirportCode,
-    description,
-    highlights,
-    images,
-    videos,
-    virtualTourUrl,
-    bestSeason,
-    averageStayDuration,
-    popularityScore,
-    latitude,
-    longitude,
-    currentWeather,
-    stats,
-    createdAt,
-    updatedAt,
-    createdBy,
-    lastModifiedBy,
-    active,
-  ];
+        id,
+        name,
+        region,
+        nearestAirportId,
+        nearestAirportCode,
+        description,
+        highlights,
+        images,
+        videos,
+        virtualTourUrl,
+        bestSeason,
+        averageStayDuration,
+        popularityScore,
+        latitude,
+        longitude,
+        currentWeather,
+        stats,
+        createdAt,
+        updatedAt,
+        createdBy,
+        lastModifiedBy,
+        active,
+      ];
 }
 
 class CurrentWeather extends Equatable {
@@ -93,10 +93,10 @@ class CurrentWeather extends Equatable {
 
   @override
   List<Object?> get props => [
-    temperature,
-    condition,
-    humidity,
-    description,
-    lastUpdated,
-  ];
+        temperature,
+        condition,
+        humidity,
+        description,
+        lastUpdated,
+      ];
 }

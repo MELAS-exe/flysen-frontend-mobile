@@ -14,10 +14,7 @@ class AnonymousUserModel extends UserModel {
     required super.idToken,
     required super.refreshToken,
     required super.expiresIn,
-    required this.uid,
   }) : super(email: 'anonymous');
-
-  final String uid;
 
   /// Creates an AnonymousUserModel from JSON
   factory AnonymousUserModel.fromJson(Map<String, dynamic> json) {
@@ -25,7 +22,6 @@ class AnonymousUserModel extends UserModel {
       idToken: json['idToken'] as String,
       refreshToken: json['refreshToken'] as String,
       expiresIn: json['expiresIn'] as String,
-      uid: json['uid'] as String,
     );
   }
 
@@ -37,7 +33,6 @@ class AnonymousUserModel extends UserModel {
       'refreshToken': refreshToken,
       'expiresIn': expiresIn,
       'email': 'anonymous',
-      'uid': uid,
     };
   }
 
@@ -47,7 +42,6 @@ class AnonymousUserModel extends UserModel {
       idToken: idToken,
       refreshToken: refreshToken,
       expiresIn: expiresIn,
-      uid: uid,
     );
   }
 
@@ -57,7 +51,6 @@ class AnonymousUserModel extends UserModel {
       idToken: user.idToken,
       refreshToken: user.refreshToken,
       expiresIn: user.expiresIn,
-      uid: user.uid,
     );
   }
 }

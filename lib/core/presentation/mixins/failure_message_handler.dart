@@ -12,6 +12,8 @@ mixin FailureMessageHandler {
         context.displayFlash(failure.message);
       case AuthFailure():
         context.displayFlash(failure.message);
+      case TurnstileFailure():
+        context.displayFlash(failure.message);
     }
   }
 }

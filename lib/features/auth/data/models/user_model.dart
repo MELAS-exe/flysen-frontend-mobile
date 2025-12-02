@@ -22,7 +22,7 @@ class UserModel extends User {
       idToken: json['idToken'] as String,
       refreshToken: json['refreshToken'] as String,
       expiresIn: json['expiresIn'] as String,
-      email: json['email'] as String,
+      email: json['email'] as String? ?? '',
     );
   }
 

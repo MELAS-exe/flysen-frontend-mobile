@@ -59,9 +59,9 @@ class ReusableTabButton<T> extends StatelessWidget {
           child: Text(
             title,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: isSelected ? selectedTextColor : unselectedTextColor,
-              fontWeight: FontWeight.bold,
-            ),
+                  color: isSelected ? selectedTextColor : unselectedTextColor,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
         ),
       ),

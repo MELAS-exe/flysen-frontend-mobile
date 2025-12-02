@@ -5,6 +5,8 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'package:flysen_frontend_mobile/features/auth/auth.dart';
+import 'package:flysen_frontend_mobile/features/auth/data/models/refresh_token_request.dart';
 import 'package:flysen_frontend_mobile/features/auth/data/models/sign_in_request.dart';
 import 'package:flysen_frontend_mobile/features/auth/data/models/sign_up_request.dart';
 import 'package:flysen_frontend_mobile/features/auth/data/models/sign_up_response_model.dart';
@@ -17,8 +19,8 @@ abstract interface class AuthRemoteDataSource {
   /// Throws [ServerException] on error
   Future<UserModel> signIn(SignInRequest request);
 
+  Future<UserModel> signInAnonymously(String turnstileToken);
 
-  Future<UserModel> signInAnonymously();
   /// Signs up a new user with email and password
   /// Returns [SignUpResponseModel] on success
   /// Throws [ServerException] on error
@@ -27,4 +29,7 @@ abstract interface class AuthRemoteDataSource {
   /// Signs out user with token
   /// Throws [ServerException] on error
   Future<void> signOut(String idToken);
+
+  /// Refreshes the Firebase ID token using a refresh token.
+  Future<AnonymousUserModel> refreshToken(RefreshTokenRequest request);
 }

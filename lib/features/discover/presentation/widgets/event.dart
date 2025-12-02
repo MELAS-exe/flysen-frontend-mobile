@@ -1,89 +1,102 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flysen_frontend_mobile/core/utils/dimensions.dart';
+import 'package:flysen_frontend_mobile/features/discover/domain/entities/event_entity.dart';
+import 'package:intl/intl.dart'; // Import for date formatting
 
 class Event extends StatelessWidget {
   final GestureTapCallback? onTap;
-  final Image image;
-  final String title;
-  final String region;
-  final String duration;
+  final EventEntity eventEntity;
 
   const Event({
     super.key,
     this.onTap,
-    required this.image,
-    required this.title,
-    required this.region,
-    required this.duration,
+    required this.eventEntity,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width - 40,
-          height: 200,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: image,
-          ),
-        ),
-        Positioned(
-          bottom: 0,
-          child: Container(
-            width: MediaQuery.of(context).size.width - 40,
-            height: 80,
+    // Helper to format the date nicely
+    String formattedDate =
+        DateFormat('d MMM', 'fr_FR').format(eventEntity.date);
+
+    return GestureDetector(
+      // Wrap with GestureDetector to make it tappable
+      onTap: onTap,
+      child: Stack(
+        children: [
+          Container(
+            height: 120.h,
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(
-                0.5,
-              ), // Semi-transparent white background
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 10,
-                  spreadRadius: 5,
-                ),
-              ],
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 10),
-                        SizedBox(
-                          width: 150,
-                          child: Text(
-                            title,
-                            style: TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                              color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold)
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                            region,
-                            style: TextStyle(
-                                color: Colors.white, fontSize: 12)
-                        ),
-                      ],
+                // --- THIS IS THE FIX ---
+                image: DecorationImage(
+                    // Use CachedNetworkImage for better performance and error handling
+                    image: CachedNetworkImageProvider(
+                      // Use the safe 'firstImage' getter from your entity
+                      eventEntity.firstImage,
                     ),
-                    Text(duration, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),)
-                  ],
+                    fit: BoxFit.cover,
+                    // Add a color filter to darken the image slightly, making text more readable
+                    colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(0.3), BlendMode.darken)),
+                borderRadius: BorderRadius.circular(15.r)),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              // The transparent gradient overlay can be simplified
+              child: Container(
+                height: 60.h,
+                padding: Dimension.horizontalPadding,
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        // Use Expanded to handle long text
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 8.h),
+                            Text(eventEntity.name,
+                                maxLines: 1, // Ensure single line
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                        overflow: TextOverflow.ellipsis,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold)),
+                            SizedBox(height: 2.h),
+                            Text(eventEntity.destinationName,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(
+                                      color: Colors.white,
+                                    )),
+                          ],
+                        ),
+                      ),
+                      // Nicer Date Display
+                      Text(
+                        formattedDate,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

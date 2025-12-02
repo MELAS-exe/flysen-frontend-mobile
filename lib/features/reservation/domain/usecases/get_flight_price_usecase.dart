@@ -7,15 +7,16 @@ import 'package:flysen_frontend_mobile/features/reservation/domain/repositories/
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class GetFlightPriceUseCase implements UseCase<FlightPriceResponse, FlightPriceParams> {
+class GetFlightPriceUseCase
+    implements UseCase<FlightPriceResponse, FlightPriceParams> {
   final FlightRepository repository;
 
   GetFlightPriceUseCase(this.repository);
 
   @override
   Future<Either<Failure, FlightPriceResponse>> call(
-      FlightPriceParams params,
-      ) async {
+    FlightPriceParams params,
+  ) async {
     return await repository.getFlightPrice(params);
   }
 }

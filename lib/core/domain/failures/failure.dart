@@ -21,3 +21,8 @@ class AuthFailure extends Failure {
   const AuthFailure({required this.message}) : super(message: '');
   final String message;
 }
+
+class TurnstileFailure extends Failure {
+  const TurnstileFailure({required this.message}) : super(message: '');
+  final String message;
+}

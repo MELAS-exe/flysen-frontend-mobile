@@ -14,8 +14,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flysen_frontend_mobile/core/theme/theme.dart';
 import 'package:flysen_frontend_mobile/features/auth/auth.dart';
 import 'package:flysen_frontend_mobile/features/auth/presentation/blocs/bottom_sheet/bottom_sheet_cubit.dart';
+import 'package:flysen_frontend_mobile/features/discover/presentation/blocs/discover_search/discover_search_bloc.dart';
 import 'package:flysen_frontend_mobile/features/notification_message/presentation/bloc/notification_bloc.dart';
 import 'package:flysen_frontend_mobile/features/reservation/presentation/bloc/flight/flight_bloc.dart';
+import 'package:flysen_frontend_mobile/features/reservation/presentation/bloc/location_search/location_search_bloc.dart';
 import 'package:flysen_frontend_mobile/firebase_options.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flysen_frontend_mobile/app/router/app_router.dart';
@@ -49,7 +51,7 @@ class App extends StatelessWidget {
           create: (context) => getIt<NotificationBloc>(),
         ),
         BlocProvider(
-            create: (context) => getIt<AuthBloc>(),
+          create: (context) => getIt<AuthBloc>(),
         ),
         BlocProvider(
           create: (context) => getIt<FlightBloc>(),
@@ -58,6 +60,11 @@ class App extends StatelessWidget {
       ],
       child: MultiBlocListener(
         listeners: [
+          BlocListener<AuthBloc, AuthState>(listener: (context, state) {
+            if (state is Authenticated) {
+              context.read<AuthBloc>().add(RefreshTokenRequested());
+            }
+          }),
           BlocListener<FlashCubit, FlashState>(
             listener: (context, state) {
               switch (state) {

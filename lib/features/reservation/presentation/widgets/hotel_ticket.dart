@@ -35,139 +35,140 @@ class HotelTicket extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: ImageSizedContainer(
-        builder:
-            (scale) => Padding(
-              padding: EdgeInsets.fromLTRB(
-                20.0 * scale,
-                20.0 * scale,
-                15.0 * scale,
-                20.0 * scale,
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 200 * scale,
-                    child: Column(
+        builder: (scale) => Padding(
+          padding: EdgeInsets.fromLTRB(
+            20.0 * scale,
+            20.0 * scale,
+            15.0 * scale,
+            20.0 * scale,
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 200 * scale,
+                child: Column(
+                  children: [
+                    Text(
+                      "Hotel",
+                      style: TextStyle(
+                        fontSize: 12 * scale,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    SizedBox(height: 5 * scale),
+                    Text(
+                      hotelName,
+                      style: TextStyle(
+                        fontSize: 16 * scale,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 5 * scale),
+                    SizedBox(height: 30),
+                    Text(
+                      chambre,
+                      style: TextStyle(
+                        fontSize: 12 * scale,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 5 * scale),
+                    Stack(
+                      alignment: Alignment.center,
                       children: [
-                        Text(
-                          "Hotel",
-                          style: TextStyle(
-                            fontSize: 12 * scale,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        SizedBox(height: 5 * scale),
-                        Text(
-                          hotelName,
-                          style: TextStyle(
-                            fontSize: 16 * scale,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 5 * scale),
-                        SizedBox(height: 30),
-                        Text(
-                          chambre,
-                          style: TextStyle(
-                            fontSize: 12 * scale,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 5*scale),
-                        Stack(
-                          alignment: Alignment.center,
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                CircleAvatar(
-                                  radius: 5 * scale,
-                                  backgroundColor: Colors.black,
-                                ),
-                                Dash(
-                                  length: 120 * scale,
-                                  direction: Axis.horizontal,
-                                  dashColor: Colors.grey,
-                                  dashLength: 5 * scale,
-                                ),
-                                CircleAvatar(
-                                  radius: 5 * scale,
-                                  backgroundColor: Colors.black,
-                                ),
-                              ],
+                            CircleAvatar(
+                              radius: 5 * scale,
+                              backgroundColor: Colors.black,
                             ),
-                            Image.asset("assets/lit.png", scale: 3 / scale),
+                            Dash(
+                              length: 120 * scale,
+                              direction: Axis.horizontal,
+                              dashColor: Colors.grey,
+                              dashLength: 5 * scale,
+                            ),
+                            CircleAvatar(
+                              radius: 5 * scale,
+                              backgroundColor: Colors.black,
+                            ),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Image.asset("assets/lit.png", scale: 3 / scale),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
                           children: [
-                            Column(
-                              children: [
-                                Text(
-                                  "Début",
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 12*scale,
-                                  ),
-                                ),
-                                SizedBox(height: 5 * scale),
-                                Text(
-                                  dateFormat(dateDebut),
-                                  style: TextStyle(
-                                    fontSize: 14*scale,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              "Début",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12 * scale,
+                              ),
                             ),
-                            Column(
-                              children: [
-                                Text(
-                                  "fin",
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 12*scale,
-                                  ),
-                                ),
-                                SizedBox(height: 5 * scale),
-                                Text(
-                                  dateFormat(dateFin),
-                                  style: TextStyle(
-                                    fontSize: 14*scale,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
+                            SizedBox(height: 5 * scale),
+                            Text(
+                              dateFormat(dateDebut),
+                              style: TextStyle(
+                                fontSize: 14 * scale,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              "fin",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12 * scale,
+                              ),
+                            ),
+                            SizedBox(height: 5 * scale),
+                            Text(
+                              dateFormat(dateFin),
+                              style: TextStyle(
+                                fontSize: 14 * scale,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(width: 40*scale),
-                  Container(
-                    width: 120 * scale,
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                      Image.asset("assets/RadissonLogo.png", scale: 3 / scale),
-                      SizedBox(height: 20*scale,),
-                      Column(
-                        children: [
-                          Text(
-                            "${price} F CFA",
-                            style: TextStyle(
-                              fontSize: 16 * scale,
-                              fontWeight: FontWeight.bold,)),
-                          Text(classe, style: TextStyle(color: Colors.grey, fontSize: 12 * scale)),
-                        ],
-                      )
-                    ]),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+              SizedBox(width: 40 * scale),
+              Container(
+                width: 120 * scale,
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  Image.asset("assets/RadissonLogo.png", scale: 3 / scale),
+                  SizedBox(
+                    height: 20 * scale,
+                  ),
+                  Column(
+                    children: [
+                      Text("${price} F CFA",
+                          style: TextStyle(
+                            fontSize: 16 * scale,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      Text(classe,
+                          style: TextStyle(
+                              color: Colors.grey, fontSize: 12 * scale)),
+                    ],
+                  )
+                ]),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -193,13 +194,11 @@ class _ImageSizedContainerState extends State<ImageSizedContainer> {
   Future<void> _loadImage(String assetPath) async {
     final imageProvider = AssetImage(assetPath);
     final config = ImageConfiguration();
-    imageProvider
-        .resolve(config)
-        .addListener(
-          ImageStreamListener((ImageInfo info, bool _) {
-            setState(() => image = info.image);
-          }),
-        );
+    imageProvider.resolve(config).addListener(
+      ImageStreamListener((ImageInfo info, bool _) {
+        setState(() => image = info.image);
+      }),
+    );
   }
 
   @override

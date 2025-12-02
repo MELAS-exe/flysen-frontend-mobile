@@ -3,6 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flysen_frontend_mobile/core/presentation/widgets/nav_bar.dart';
 import 'package:flysen_frontend_mobile/features/auth/presentation/pages/introduction_slider.dart';
 import 'package:flysen_frontend_mobile/features/chatbot/presentation/pages/chatbot.dart';
+import 'package:flysen_frontend_mobile/features/discover/domain/entities/destination_entity.dart';
+import 'package:flysen_frontend_mobile/features/discover/domain/entities/event_entity.dart';
+import 'package:flysen_frontend_mobile/features/discover/presentation/widgets/destination_detail.dart';
+import 'package:flysen_frontend_mobile/features/discover/presentation/widgets/event_detail..dart';
 import 'package:flysen_frontend_mobile/features/reservation/domain/entities/flight_offer.dart';
 import 'package:flysen_frontend_mobile/features/reservation/presentation/pages/history.dart';
 import 'package:flysen_frontend_mobile/features/reservation/presentation/pages/hotel_ticket_detail.dart';
@@ -28,6 +32,8 @@ class AppRouter extends Equatable {
   static const hotelTicketDetail = 'hotelTicketDetail';
   static const history = 'history';
   static const chatBot = 'chatBot';
+  static const destinationDetail = 'destinationDetail';
+  static const eventDetail = 'eventDetail';
 
   @override
   List<Object?> get props => [
@@ -42,6 +48,8 @@ class AppRouter extends Equatable {
         tripTicketDetail,
         hotelTicketDetail,
         chatBot,
+        destinationDetail,
+        eventDetail,
       ];
 }
 
@@ -54,6 +62,18 @@ GoRouter router([String? initialLocation]) => GoRouter(
           name: AppRouter.auth,
           builder: (context, state) => const IntroductionSlider(),
         ),
+        GoRoute(
+          path: '/destinationDetail',
+          name: AppRouter.destinationDetail,
+          builder: (context, state) => DestinationDetail(
+            destination: state.extra as DestinationEntity,
+          ),
+        ),
+        GoRoute(
+            path: '/eventDetail',
+            name: AppRouter.eventDetail,
+            builder: (context, state) =>
+                EventDetail(event: state.extra as EventEntity)),
         GoRoute(
           path: '/navigation',
           name: AppRouter.navigation,

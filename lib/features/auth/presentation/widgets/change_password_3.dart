@@ -29,7 +29,6 @@ class _ChangePassword3State extends State<ChangePassword3> {
         CustomTextField(hintText: "Mot de passe", textHidable: true),
         SizedBox(height: 20),
         CustomTextField(hintText: "Confirmer mot de passe", textHidable: true),
-
         SizedBox(height: 80),
         CustomButton(
           width: MediaQuery.of(context).size.width,
@@ -43,9 +42,8 @@ class _ChangePassword3State extends State<ChangePassword3> {
               context: context,
               builder: (BuildContext context) {
                 return Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20,
-                      MediaQuery.of(context).viewInsets.bottom
-                  ),
+                  padding: EdgeInsets.fromLTRB(
+                      20, 20, 20, MediaQuery.of(context).viewInsets.bottom),
                   child: LoginScreen(),
                 );
               },
@@ -62,17 +60,15 @@ class _ChangePassword3State extends State<ChangePassword3> {
               context: context,
               builder: (BuildContext context) {
                 return Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20,
-                      MediaQuery.of(context).viewInsets.bottom
-                  ),
+                  padding: EdgeInsets.fromLTRB(
+                      20, 20, 20, MediaQuery.of(context).viewInsets.bottom),
                   child: RegisterScreen(),
                 );
               },
             );
           },
           child: RichText(
-            text:
-            TextSpan(
+            text: TextSpan(
               text: " Retourner à la page de connexion",
               style: TextStyle(
                 color: AppTheme.lightTheme.colorScheme.tertiary,
@@ -83,7 +79,9 @@ class _ChangePassword3State extends State<ChangePassword3> {
             ),
           ),
         ),
-        SizedBox(height: 40,)
+        SizedBox(
+          height: 40,
+        )
       ],
     );
   }

@@ -44,12 +44,14 @@ class FlightTicket extends StatelessWidget {
       return formatter.format(time);
     }
 
-    final Image childImage = Image(image: AssetImage("assets/ticket-avion.png"));
+    final Image childImage =
+        Image(image: AssetImage("assets/ticket-avion.png"));
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: ImageSizedContainer(
         builder: (scale) => Padding(
-          padding: EdgeInsets.fromLTRB(20.0 * scale, 30.0 * scale, 20.0 * scale, 10.0 * scale),
+          padding: EdgeInsets.fromLTRB(
+              20.0 * scale, 30.0 * scale, 20.0 * scale, 10.0 * scale),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -69,7 +71,9 @@ class FlightTicket extends StatelessWidget {
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
-                        Text("Départ", style: TextStyle(color: Colors.grey, fontSize: 14 * scale)),
+                        Text("Départ",
+                            style: TextStyle(
+                                color: Colors.grey, fontSize: 14 * scale)),
                       ],
                     ),
                   ),
@@ -77,11 +81,16 @@ class FlightTicket extends StatelessWidget {
                     width: 100 * scale,
                     child: Column(
                       children: [
-                        Text("Durée", style: TextStyle(color: Colors.grey, fontSize: 14 * scale)),
+                        Text("Durée",
+                            style: TextStyle(
+                                color: Colors.grey, fontSize: 14 * scale)),
                         Text(
-                          formatDuration(getFlightDuration(this.departureTime, this.arrivalTime)),
+                          formatDuration(getFlightDuration(
+                              this.departureTime, this.arrivalTime)),
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 16 * scale, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16 * scale,
+                              fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -91,9 +100,13 @@ class FlightTicket extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(arrivalAirport,
-                            style: TextStyle(fontSize: 16 * scale, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 16 * scale,
+                                fontWeight: FontWeight.bold),
                             overflow: TextOverflow.ellipsis),
-                        Text("Arrivée", style: TextStyle(color: Colors.grey, fontSize: 14 * scale)),
+                        Text("Arrivée",
+                            style: TextStyle(
+                                color: Colors.grey, fontSize: 14 * scale)),
                       ],
                     ),
                   ),
@@ -102,9 +115,11 @@ class FlightTicket extends StatelessWidget {
               SizedBox(height: 40 * scale),
               Row(
                 children: [
-                  Text(formatTime(departureTime), style: TextStyle(fontSize: 14 * scale)),
+                  Text(formatTime(departureTime),
+                      style: TextStyle(fontSize: 14 * scale)),
                   SizedBox(width: 5 * scale),
-                  CircleAvatar(radius: 5 * scale, backgroundColor: Colors.black),
+                  CircleAvatar(
+                      radius: 5 * scale, backgroundColor: Colors.black),
                   Stack(
                     alignment: Alignment.center,
                     children: [
@@ -117,9 +132,11 @@ class FlightTicket extends StatelessWidget {
                       Image.asset("assets/modeavionon.png", scale: 3 / scale),
                     ],
                   ),
-                  CircleAvatar(radius: 5 * scale, backgroundColor: Colors.black),
+                  CircleAvatar(
+                      radius: 5 * scale, backgroundColor: Colors.black),
                   SizedBox(width: 5 * scale),
-                  Text(formatTime(arrivalTime), style: TextStyle(fontSize: 14 * scale)),
+                  Text(formatTime(arrivalTime),
+                      style: TextStyle(fontSize: 14 * scale)),
                 ],
               ),
               SizedBox(height: 45 * scale),
@@ -139,8 +156,13 @@ class FlightTicket extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text("${price} F CFA", style: TextStyle(fontSize: 16 * scale, fontWeight: FontWeight.bold)),
-                      Text(classe, style: TextStyle(color: Colors.grey, fontSize: 12 * scale)),
+                      Text("${price} F CFA",
+                          style: TextStyle(
+                              fontSize: 16 * scale,
+                              fontWeight: FontWeight.bold)),
+                      Text(classe,
+                          style: TextStyle(
+                              color: Colors.grey, fontSize: 12 * scale)),
                     ],
                   )
                 ],
@@ -150,7 +172,6 @@ class FlightTicket extends StatelessWidget {
         ),
       ),
     );
-
   }
 }
 

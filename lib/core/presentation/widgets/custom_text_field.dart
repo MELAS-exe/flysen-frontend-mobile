@@ -1,20 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flysen_frontend_mobile/core/theme/theme.dart';
 
 class CustomTextField extends StatefulWidget {
-  String? hintText;
-  TextEditingController? controller;
-  bool textHidable;
-  bool readOnly;
-  bool searchable;
-  double? width;
-  double? height;
-  bool enabled;
-  double prefixWidth;
-  GestureTapCallback? onTap;
+  final String? hintText;
+  final TextEditingController? controller;
+  final bool textHidable;
+  final bool readOnly;
+  final bool searchable;
+  final double? width;
+  final double? height;
+  final bool enabled;
+  final double prefixWidth;
+  final GestureTapCallback? onTap;
+  final FocusNode? focusNode; // New: To handle focus state
+  final ValueChanged<String>?
+      onChanged; // New: To notify parent of text changes
+  final FormFieldValidator<String>? validator; // New: For form validation
 
-  CustomTextField({
+  const CustomTextField({
+    super.key,
     this.prefixWidth = 0,
     this.enabled = true,
     this.readOnly = false,
@@ -24,7 +30,10 @@ class CustomTextField extends StatefulWidget {
     this.searchable = false,
     this.width,
     this.height,
-    this.onTap
+    this.onTap,
+    this.focusNode, // New
+    this.onChanged, // New
+    this.validator, // New
   });
 
   @override
@@ -32,14 +41,14 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-
   bool obscureText = false;
 
   @override
   void initState() {
-    if(widget.textHidable) obscureText = true;
+    if (widget.textHidable) obscureText = true;
     super.initState();
   }
+
   Widget? togglePassword() {
     return IconButton(
       onPressed: () {
@@ -50,6 +59,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       icon: Icon(!obscureText ? Icons.visibility : Icons.visibility_off),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -58,14 +68,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
         SizedBox(
           width: widget.width,
           height: widget.height,
-          child: TextField(
+          // Use TextFormField instead of TextField to get validation capabilities
+          child: TextFormField(
+            focusNode: widget.focusNode, // Pass the focus node
+            onChanged: widget.onChanged, // Pass the onChanged callback
+            validator: widget.validator, // Pass the validator function
             readOnly: widget.readOnly,
             enabled: widget.enabled,
             controller: widget.controller,
             obscureText: obscureText,
             decoration: InputDecoration(
               disabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   color: Colors.black,
                 ),
                 borderRadius: BorderRadius.circular(200),
@@ -78,36 +92,46 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ),
               prefix: SizedBox(width: widget.prefixWidth),
               hintText: widget.hintText,
-              hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
+              hintStyle: const TextStyle(color: Colors.grey, fontSize: 14),
               border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(200),
+              ),
+              // You can customize error style here if you want
+              errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.red, width: 1),
+                borderRadius: BorderRadius.circular(200),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.red, width: 2),
                 borderRadius: BorderRadius.circular(200),
               ),
             ),
           ),
         ),
-        widget.searchable
-            ? Container(
-              margin: EdgeInsets.only(right: 20),
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-                onTap: widget.onTap,
-                child: SizedBox(
-                  width: 30,
-                  child: Image.asset("assets/icons/search.png"),
+        if (widget.searchable)
+          Container(
+            margin: const EdgeInsets.only(right: 20),
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: widget.onTap,
+              child: SizedBox(
+                width: 30,
+                child: Image.asset(
+                  "assets/icons/search.png",
+                  width: 24.r,
                 ),
               ),
-            )
-            : SizedBox(),
-        widget.textHidable
-            ? Container(
-          margin: EdgeInsets.only(right: 20),
-          alignment: Alignment.centerRight,
-          child: SizedBox(
-            width: 30,
-            child: togglePassword(),
+            ),
           ),
-        )
-            : SizedBox(),
+        if (widget.textHidable)
+          Container(
+            margin: const EdgeInsets.only(right: 20),
+            alignment: Alignment.centerRight,
+            child: SizedBox(
+              width: 30,
+              child: togglePassword(),
+            ),
+          ),
       ],
     );
   }

@@ -27,7 +27,8 @@ class _TripTicketDetailState extends State<TripTicketDetail> {
                     margin: EdgeInsets.only(left: 20, right: 20),
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.8), // Semi-transparent white background
+                      color: Colors.white.withOpacity(
+                          0.8), // Semi-transparent white background
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: SingleChildScrollView(
@@ -51,12 +52,23 @@ class _TripTicketDetailState extends State<TripTicketDetail> {
                   ),
                   Row(
                     children: [
-                      SizedBox(width: 20,),
-                      Text("Votre vol dans 1 jour", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        "Votre vol dans 1 jour",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
                     ],
                   ),
-                  SizedBox(height: 20,),
-                  Image.asset("assets/plane-1.png", scale: 0.5,),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Image.asset(
+                    "assets/plane-1.png",
+                    scale: 0.5,
+                  ),
                   FlightTicket(
                     airlineName: "Air Sénégal",
                     departureAirport: "Dakar",

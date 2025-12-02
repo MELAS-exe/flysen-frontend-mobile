@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flysen_frontend_mobile/app/router/app_router.dart';
 import 'package:flysen_frontend_mobile/core/presentation/widgets/custom_button.dart';
 import 'package:flysen_frontend_mobile/core/presentation/widgets/custom_text_field.dart';
+import 'package:flysen_frontend_mobile/core/presentation/widgets/location_search_field.dart';
 import 'package:flysen_frontend_mobile/core/presentation/widgets/tab_selector.dart';
 import 'package:flysen_frontend_mobile/core/presentation/widgets/top_bar.dart';
 import 'package:flysen_frontend_mobile/core/theme/theme.dart';
@@ -33,8 +34,21 @@ class _TripStep1State extends State<TripStep1> {
   int infantCount = 0;
   int childCount = 0;
   final DateFormat _apiDateFormat = DateFormat('yyyy-MM-dd');
-
   final DateFormat _displayDateFormat = DateFormat('dd/MM/yyyy');
+  String? _departureIataCode;
+  String? _arrivalIataCode;
+
+  void permuteLocation() {
+    // Also permute the IATA codes
+    final String tempCode = _departureIataCode ?? '';
+    _departureIataCode = _arrivalIataCode;
+    _arrivalIataCode = tempCode;
+
+    // Permute the controller text
+    String temp = _departureLocationController.text;
+    _departureLocationController.text = _arrivalLocationController.text;
+    _arrivalLocationController.text = temp;
+  }
 
   void incrementAdultCount() {
     setState(() {
@@ -76,12 +90,6 @@ class _TripStep1State extends State<TripStep1> {
         childCount--;
       }
     });
-  }
-
-  void permuteLocation() {
-    String temp = _departureLocationController.text;
-    _departureLocationController.text = _arrivalLocationController.text;
-    _arrivalLocationController.text = temp;
   }
 
   Future<void> _selectDepartureDate() async {
@@ -186,14 +194,15 @@ class _TripStep1State extends State<TripStep1> {
         }
       },
       child: Scaffold(
-        appBar: TopBar(showBack: true,),
+        appBar: TopBar(
+          showBack: true,
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding:
-              EdgeInsets.symmetric(horizontal: 16.w, vertical: 32.w),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 32.w),
               child: SizedBox(
-                height: MediaQuery.of(context).size.height/1.2,
+                height: MediaQuery.of(context).size.height / 1.2,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -226,11 +235,15 @@ class _TripStep1State extends State<TripStep1> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        CustomTextField(
-                          width: MediaQuery.of(context).size.width / 2.7,
-                          height: 56.h,
+                        LocationSearchField(
                           hintText: "Départ",
                           controller: _departureLocationController,
+                          onLocationSelected: (location) {
+                            setState(() {
+                              _departureLocationController.text = location.name;
+                              _departureIataCode = location.iataCode;
+                            });
+                          },
                         ),
                         GestureDetector(
                             onTap: () {
@@ -245,11 +258,15 @@ class _TripStep1State extends State<TripStep1> {
                                     color: Colors.white,
                                   ),
                                 ))),
-                        CustomTextField(
-                          width: MediaQuery.of(context).size.width / 2.7,
-                          height: 56.h,
+                        LocationSearchField(
                           hintText: "Arrivée",
                           controller: _arrivalLocationController,
+                          onLocationSelected: (location) {
+                            setState(() {
+                              _arrivalLocationController.text = location.name;
+                              _arrivalIataCode = location.iataCode;
+                            });
+                          },
                         ),
                       ],
                     ),
@@ -270,8 +287,7 @@ class _TripStep1State extends State<TripStep1> {
                             if (departureDate != null) {
                               setState(() {
                                 _departureDateController.text =
-                                    _displayDateFormat
-                                        .format(departureDate);
+                                    _displayDateFormat.format(departureDate);
                               });
                             }
                           },
@@ -295,14 +311,12 @@ class _TripStep1State extends State<TripStep1> {
                               if (arrivalDate != null) {
                                 setState(() {
                                   _arrivalDateController.text =
-                                      _displayDateFormat
-                                          .format(arrivalDate);
+                                      _displayDateFormat.format(arrivalDate);
                                 });
                               }
                             },
                             child: CustomTextField(
-                              width:
-                                  MediaQuery.of(context).size.width / 2.25,
+                              width: MediaQuery.of(context).size.width / 2.25,
                               height: 56.h,
                               hintText: "Arrivée",
                               controller: _arrivalDateController,
@@ -368,7 +382,9 @@ class _TripStep1State extends State<TripStep1> {
                             label: infantCount),
                       ],
                     ),
-                    SizedBox(height: 32.h,),
+                    SizedBox(
+                      height: 32.h,
+                    ),
                     BlocBuilder<FlightBloc, FlightState>(
                       builder: (context, state) {
                         // Show loading indicator inside the button when loading
@@ -416,19 +432,27 @@ class _TripStep1State extends State<TripStep1> {
                               travelerId++;
                             }
 
-                            final originLocationCode =
-                            _departureLocationController.text
-                                .trim()
-                                .toUpperCase();
-                            final destinationLocationCode =
-                            _arrivalLocationController.text
-                                .trim()
-                                .toUpperCase();
+                            final originLocationCode = _departureIataCode;
+                            final destinationLocationCode = _arrivalIataCode;
+
+                            if (originLocationCode == null ||
+                                destinationLocationCode == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      "Veuillez sélectionner un lieu de départ et d'arrivée."),
+                                  backgroundColor: Colors.orange,
+                                ),
+                              );
+                              return;
+                            }
 
                             // Create the map of IATA codes to user-friendly names
                             final Map<String, String> friendlyLocationNames = {
-                              originLocationCode: _departureLocationController.text.trim(),
-                              destinationLocationCode: _arrivalLocationController.text.trim(),
+                              originLocationCode:
+                                  _departureLocationController.text.trim(),
+                              destinationLocationCode:
+                                  _arrivalLocationController.text.trim(),
                             };
 
                             FlightSearchParams params = FlightSearchParams(
@@ -437,41 +461,36 @@ class _TripStep1State extends State<TripStep1> {
                               travelers: travelers,
                               sources: const ['GDS'],
                               searchCriteria:
-                              const SearchCriteria(maxFlightOffers: 20),
+                                  const SearchCriteria(maxFlightOffers: 20),
                             );
 
                             params.originDestinations.add(OriginDestination(
                               id: '1',
                               originLocationCode: originLocationCode,
-                              destinationLocationCode:
-                              destinationLocationCode,
-                              departureDateTimeRange:
-                              DepartureDateTimeRange(
+                              destinationLocationCode: destinationLocationCode,
+                              departureDateTimeRange: DepartureDateTimeRange(
                                   date: _selectedDepartureDate != null
-                                      ? _apiDateFormat.format(
-                                      _selectedDepartureDate!)
+                                      ? _apiDateFormat
+                                          .format(_selectedDepartureDate!)
                                       : ''),
                             ));
 
                             if (_selectedTripType == TripType.roundTrip) {
-                              params.originDestinations
-                                  .add(OriginDestination(
+                              params.originDestinations.add(OriginDestination(
                                 id: '2',
                                 originLocationCode: destinationLocationCode,
                                 destinationLocationCode: originLocationCode,
-                                departureDateTimeRange:
-                                DepartureDateTimeRange(
+                                departureDateTimeRange: DepartureDateTimeRange(
                                     date: _selectedArrivalDate != null
-                                        ? _apiDateFormat.format(
-                                        _selectedArrivalDate!)
+                                        ? _apiDateFormat
+                                            .format(_selectedArrivalDate!)
                                         : ''),
                               ));
                             }
 
                             // Dispatch the event with both the params and the friendly names map
-                            context
-                                .read<FlightBloc>()
-                                .add(SearchFlights(params, friendlyLocationNames));
+                            context.read<FlightBloc>().add(
+                                SearchFlights(params, friendlyLocationNames));
                           },
                         );
                       },

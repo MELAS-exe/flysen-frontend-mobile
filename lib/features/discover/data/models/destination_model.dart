@@ -1,4 +1,4 @@
-import 'package:flysen_frontend_mobile/features/discover/domain/entities/destination.dart';
+import 'package:flysen_frontend_mobile/features/discover/domain/entities/destination_entity.dart';
 
 class DestinationModel {
   DestinationModel({
@@ -80,7 +80,7 @@ class DestinationModel {
           : null,
       currentWeather: json['currentWeather'] != null
           ? CurrentWeatherModel.fromJson(
-          json['currentWeather'] as Map<String, dynamic>)
+              json['currentWeather'] as Map<String, dynamic>)
           : null,
       stats: json['stats'],
       createdAt: json['createdAt'] != null
@@ -122,8 +122,8 @@ class DestinationModel {
     };
   }
 
-  Destination toEntity() {
-    return Destination(
+  DestinationEntity toEntity() {
+    return DestinationEntity(
       id: id,
       name: name,
       region: region,

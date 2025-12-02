@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ import 'package:injectable/injectable.dart';
 part 'notification_event.dart';
 part 'notification_state.dart';
 
-
 @lazySingleton
 class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   final InitializeNotifications _initializeNotifications;
@@ -23,23 +21,28 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   NotificationBloc(this._initializeNotifications, this._notificationRepository)
       : super(NotificationInitial()) {
     on<InitializeFCM>(_onInitializeFCM);
-    on<_OnMessageReceived>((event, emit) => emit(NotificationForegroundMessage(event.message)));
-    on<_OnMessageOpened>((event, emit) => emit(NotificationNavigatedFromTap(event.message)));
+    on<_OnMessageReceived>(
+        (event, emit) => emit(NotificationForegroundMessage(event.message)));
+    on<_OnMessageOpened>(
+        (event, emit) => emit(NotificationNavigatedFromTap(event.message)));
   }
 
-  Future<void> _onInitializeFCM(InitializeFCM event, Emitter<NotificationState> emit) async {
+  Future<void> _onInitializeFCM(
+      InitializeFCM event, Emitter<NotificationState> emit) async {
     await _onMessageSubscription?.cancel();
     await _onMessageOpenedSubscription?.cancel();
 
     final result = await _initializeNotifications(NoParams());
     result.fold(
-          (failure) => print('FCM Initialization Failed: ${failure.message}'),
-          (_) {
+      (failure) => print('FCM Initialization Failed: ${failure.message}'),
+      (_) {
         print('FCM Initialized Successfully');
-        _onMessageSubscription = _notificationRepository.onMessage.listen((message) {
+        _onMessageSubscription =
+            _notificationRepository.onMessage.listen((message) {
           add(_OnMessageReceived(message));
         });
-        _onMessageOpenedSubscription = _notificationRepository.onMessageOpenedApp.listen((message) {
+        _onMessageOpenedSubscription =
+            _notificationRepository.onMessageOpenedApp.listen((message) {
           add(_OnMessageOpened(message));
         });
       },

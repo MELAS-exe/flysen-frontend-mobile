@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flysen_frontend_mobile/core/theme/theme.dart';
 
 class CategoryRow extends StatefulWidget {
@@ -14,10 +15,10 @@ class _CategoryRowState extends State<CategoryRow> {
     return Stack(
       children: [
         Positioned(
-          bottom: 7,
+          bottom: 7.h,
           child: Container(
-            width: MediaQuery.sizeOf(context).width,
-            height: 2,
+            width: 1.sw - 32,
+            height: 2.h,
             color: Colors.grey,
           ),
         ),
@@ -27,11 +28,11 @@ class _CategoryRowState extends State<CategoryRow> {
             scrollDirection: Axis.horizontal,
             child: Row(
               mainAxisSize: MainAxisSize.max,
-              spacing: 10,
+              spacing: 8.h,
               children: [
-                SizedBox(width: 20),
                 CategoryRowElement(
-                    image: Image.asset("assets/icons/show-all.png"),
+                    image:
+                        Image.asset("assets/icons/show-all.png", width: 24.r),
                     title: "Tout",
                     onTap: () {
                       setState(() {
@@ -40,7 +41,8 @@ class _CategoryRowState extends State<CategoryRow> {
                     },
                     selected: _selected == 0 ? true : false),
                 CategoryRowElement(
-                    image: Image.asset("assets/icons/3-star-hotel.png"),
+                    image: Image.asset("assets/icons/3-star-hotel.png",
+                        width: 24.r),
                     title: "Hôtels",
                     onTap: () {
                       setState(() {
@@ -49,7 +51,8 @@ class _CategoryRowState extends State<CategoryRow> {
                     },
                     selected: _selected == 1 ? true : false),
                 CategoryRowElement(
-                    image: Image.asset("assets/icons/national-parc.png"),
+                    image: Image.asset("assets/icons/national-parc.png",
+                        width: 24.r),
                     title: "Parcs",
                     onTap: () {
                       setState(() {
@@ -58,7 +61,7 @@ class _CategoryRowState extends State<CategoryRow> {
                     },
                     selected: _selected == 2 ? true : false),
                 CategoryRowElement(
-                    image: Image.asset("assets/icons/beach.png"),
+                    image: Image.asset("assets/icons/beach.png", width: 24.r),
                     title: "Plage",
                     onTap: () {
                       setState(() {
@@ -67,7 +70,8 @@ class _CategoryRowState extends State<CategoryRow> {
                     },
                     selected: _selected == 3 ? true : false),
                 CategoryRowElement(
-                    image: Image.asset("assets/icons/monument.png"),
+                    image:
+                        Image.asset("assets/icons/monument.png", width: 24.r),
                     title: "Monuments",
                     onTap: () {
                       setState(() {
@@ -76,7 +80,7 @@ class _CategoryRowState extends State<CategoryRow> {
                     },
                     selected: _selected == 4 ? true : false),
                 CategoryRowElement(
-                  image: Image.asset("assets/icons/forest.png"),
+                  image: Image.asset("assets/icons/forest.png", width: 24.r),
                   title: "Forêts",
                   onTap: () {
                     setState(() {
@@ -112,10 +116,11 @@ class CategoryRowElement extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(width: 30, child: image),
           // SizedBox(height: 5),
-          Text(title, style: TextStyle(fontSize: 16, color: Colors.black)),
+          Text(title, style: Theme.of(context).textTheme.bodySmall),
           SizedBox(height: 10),
           if (selected)
             Container(

@@ -11,11 +11,11 @@ class FlightPriceParams extends Equatable {
   });
 
   Map<String, dynamic> toJson() => {
-    'data': {
-      'type': type,
-      'flightOffers': flightOffers.map((e) => e.toJson()).toList(),
-    }
-  };
+        'data': {
+          'type': type,
+          'flightOffers': flightOffers.map((e) => e.toJson()).toList(),
+        }
+      };
 
   @override
   List<Object?> get props => [type, flightOffers];

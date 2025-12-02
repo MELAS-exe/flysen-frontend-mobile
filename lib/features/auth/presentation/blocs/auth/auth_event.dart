@@ -62,3 +62,7 @@ class SignUpRequested extends AuthEvent {
   @override
   List<Object?> get props => [email, password];
 }
+
+class RefreshTokenRequested extends AuthEvent {
+  const RefreshTokenRequested();
+}

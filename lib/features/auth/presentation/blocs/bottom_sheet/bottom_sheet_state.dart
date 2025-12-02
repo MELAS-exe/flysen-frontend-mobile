@@ -14,27 +14,27 @@ final class BottomSheetLogin extends BottomSheetState {
   List<Object> get props => [];
 }
 
-final class BottomSheetRegister extends BottomSheetState{
+final class BottomSheetRegister extends BottomSheetState {
   @override
   List<Object> get props => [];
 }
 
-final class BottomSheetOtp1 extends BottomSheetState{
+final class BottomSheetOtp1 extends BottomSheetState {
   @override
   List<Object> get props => [];
 }
 
-final class BottomSheetChangePassword1 extends BottomSheetState{
+final class BottomSheetChangePassword1 extends BottomSheetState {
   @override
   List<Object> get props => [];
 }
 
-final class BottomSheetChangePassword2 extends BottomSheetState{
+final class BottomSheetChangePassword2 extends BottomSheetState {
   @override
   List<Object> get props => [];
 }
 
-final class BottomSheetChangePassword3 extends BottomSheetState{
+final class BottomSheetChangePassword3 extends BottomSheetState {
   @override
   List<Object> get props => [];
 }

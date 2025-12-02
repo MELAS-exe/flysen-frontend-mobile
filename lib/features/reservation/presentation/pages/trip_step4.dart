@@ -35,17 +35,14 @@ class _TripStep4State extends State<TripStep4> {
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
               primary:
-              AppTheme.lightTheme.colorScheme.tertiary, // Header background
+                  AppTheme.lightTheme.colorScheme.tertiary, // Header background
               onPrimary: Colors.white, // Header text
               onSurface: Colors.black, // Body text
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor:
-                AppTheme
-                    .lightTheme
-                    .colorScheme
-                    .tertiary, // Button text color
+                foregroundColor: AppTheme
+                    .lightTheme.colorScheme.tertiary, // Button text color
               ),
             ),
             dialogBackgroundColor: Colors.white,
@@ -75,17 +72,14 @@ class _TripStep4State extends State<TripStep4> {
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
               primary:
-              AppTheme.lightTheme.colorScheme.tertiary, // Header background
+                  AppTheme.lightTheme.colorScheme.tertiary, // Header background
               onPrimary: Colors.white, // Header text
               onSurface: Colors.black, // Body text
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor:
-                AppTheme
-                    .lightTheme
-                    .colorScheme
-                    .tertiary, // Button text color
+                foregroundColor: AppTheme
+                    .lightTheme.colorScheme.tertiary, // Button text color
               ),
             ),
             dialogBackgroundColor: Colors.white,
@@ -102,12 +96,14 @@ class _TripStep4State extends State<TripStep4> {
   }
 
   Future _pickImageFromGallery() async {
-    final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if(returnedImage == null) return;
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (returnedImage == null) return;
     setState(() {
       _selectedImage = File(returnedImage!.path);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -151,10 +147,13 @@ class _TripStep4State extends State<TripStep4> {
                     CustomTextField(
                       hintText: "Nom complet",
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       children: [
-                        Text("Date de naissance: ", style: TextStyle(fontSize: 14)),
+                        Text("Date de naissance: ",
+                            style: TextStyle(fontSize: 14)),
                         Text(
                           _selectedDateNaissance == null
                               ? ''
@@ -180,7 +179,9 @@ class _TripStep4State extends State<TripStep4> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: 60,
@@ -213,7 +214,9 @@ class _TripStep4State extends State<TripStep4> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: 60,
@@ -246,10 +249,13 @@ class _TripStep4State extends State<TripStep4> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       children: [
-                        Text("Date d'expiration: ", style: TextStyle(fontSize: 14)),
+                        Text("Date d'expiration: ",
+                            style: TextStyle(fontSize: 14)),
                         Text(
                           _selectedDateExpiration == null
                               ? ''
@@ -275,21 +281,31 @@ class _TripStep4State extends State<TripStep4> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       children: [
-                        Text("Copie du document : ", style: TextStyle(fontSize: 14)),
-                        _selectedImage != null ? Row(
-                          children: [
-                            Image.asset("assets/icons/image.png", width: 30),
-                            SizedBox(width: 5,),
-                            Text(
-                              _selectedImage!.path.split('/').last,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ) : SizedBox(),
+                        Text("Copie du document : ",
+                            style: TextStyle(fontSize: 14)),
+                        _selectedImage != null
+                            ? Row(
+                                children: [
+                                  Image.asset("assets/icons/image.png",
+                                      width: 30),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    _selectedImage!.path.split('/').last,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              )
+                            : SizedBox(),
                         Spacer(),
                         GestureDetector(
                           onTap: () {
@@ -306,7 +322,9 @@ class _TripStep4State extends State<TripStep4> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       children: [
                         Text(
@@ -338,7 +356,7 @@ class _TripStep4State extends State<TripStep4> {
                                 "Première",
                                 style: TextStyle(
                                   color:
-                                  _value == 1 ? Colors.white : Colors.black,
+                                      _value == 1 ? Colors.white : Colors.black,
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -365,7 +383,7 @@ class _TripStep4State extends State<TripStep4> {
                                 "Business",
                                 style: TextStyle(
                                   color:
-                                  _value == 2 ? Colors.white : Colors.black,
+                                      _value == 2 ? Colors.white : Colors.black,
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -392,7 +410,7 @@ class _TripStep4State extends State<TripStep4> {
                                 "Economique",
                                 style: TextStyle(
                                   color:
-                                  _value == 3 ? Colors.white : Colors.black,
+                                      _value == 3 ? Colors.white : Colors.black,
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),

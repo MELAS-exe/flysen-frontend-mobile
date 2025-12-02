@@ -7,7 +7,11 @@ class HotelProximity extends StatelessWidget {
   final double score;
   final GestureTapCallback? onTap;
 
-  HotelProximity({required this.logo, required this.image, required this.score, this.onTap});
+  HotelProximity(
+      {required this.logo,
+      required this.image,
+      required this.score,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -27,26 +31,25 @@ class HotelProximity extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 0,
-            child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            width: 300,
-            height: 70,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(bottomRight: Radius.circular(15), bottomLeft: Radius.circular(15)),
-              border: Border.all(color: Colors.grey, width: 1),
-              color: Colors.white,
-            ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                      width: 100,
-                      child: logo),
-                  Stars(score: score),
-                ],
-              )
-          ))
+              bottom: 0,
+              child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  width: 300,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(15),
+                        bottomLeft: Radius.circular(15)),
+                    border: Border.all(color: Colors.grey, width: 1),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(width: 100, child: logo),
+                      Stars(score: score),
+                    ],
+                  )))
         ],
       ),
     );

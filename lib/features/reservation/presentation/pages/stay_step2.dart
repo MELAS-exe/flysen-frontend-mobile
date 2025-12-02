@@ -11,7 +11,6 @@ class StayStep2 extends StatefulWidget {
 class _StayStep2State extends State<StayStep2> {
   String dropdownValue = "Orange Money";
 
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -67,8 +66,12 @@ class _StayStep2State extends State<StayStep2> {
                               dropdownValue = value!;
                             });
                           },
-                          items: <String>["Orange Money", "MTN Money", "Moov Money", "Wave"]
-                              .map<DropdownMenuItem<String>>((String value) {
+                          items: <String>[
+                            "Orange Money",
+                            "MTN Money",
+                            "Moov Money",
+                            "Wave"
+                          ].map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value),
@@ -81,9 +84,18 @@ class _StayStep2State extends State<StayStep2> {
                     Row(
                       children: [
                         Spacer(),
-                        Text("total:", style: TextStyle(color: Colors.grey, fontSize: 12),),
-                        SizedBox(width: 5,),
-                        Text("70000 F CFA", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+                        Text(
+                          "total:",
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "70000 F CFA",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
                       ],
                     ),
                     SizedBox(height: 20),

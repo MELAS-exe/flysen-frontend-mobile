@@ -56,8 +56,7 @@ class _ReservateState extends State<Reservate> {
             children: [
               SizedBox(width: 20),
               Text("Mes voyages et séjours",
-                  style:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               Spacer(),
               GestureDetector(
                 onTap: () => context.push('/history'),
@@ -85,8 +84,7 @@ class _ReservateState extends State<Reservate> {
                     onTap: () {
                       context.push("/tripTicketDetail", extra: r);
                     },
-                    airlineLogo:
-                        Image.asset("assets/icons/air-senegal.png"),
+                    airlineLogo: Image.asset("assets/icons/air-senegal.png"),
                     arilineName:
                         r["vol"]["compagnie"] as String? ?? "Air Sénégal",
                     nombrePersonne: (r["nombre_personnes"] as int?) ?? 1,
@@ -104,8 +102,7 @@ class _ReservateState extends State<Reservate> {
                   padding: const EdgeInsets.only(bottom: 20),
                   child: ReservationCard(
                     onTap: () => context.push("/hotelTicketDetail"),
-                    airlineLogo:
-                        Image.asset("assets/icons/radisson-logo.png"),
+                    airlineLogo: Image.asset("assets/icons/radisson-logo.png"),
                     arilineName: "Radisson Blu Hotel",
                     nombrePersonne: 3,
                     isHotel: true,

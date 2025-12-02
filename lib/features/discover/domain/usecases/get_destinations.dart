@@ -2,18 +2,20 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flysen_frontend_mobile/core/domain/failures/failure.dart';
 import 'package:flysen_frontend_mobile/core/domain/usecases/use_case.dart';
-import 'package:flysen_frontend_mobile/features/discover/domain/entities/destination.dart';
+import 'package:flysen_frontend_mobile/features/discover/domain/entities/destination_entity.dart';
 import 'package:flysen_frontend_mobile/features/discover/domain/repositories/discover_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class GetDestinations extends UseCase<List<Destination>, GetDestinationsParams> {
+class GetDestinations
+    extends UseCase<List<DestinationEntity>, GetDestinationsParams> {
   final DiscoverRepository _repository;
 
   GetDestinations(this._repository);
 
   @override
-  Future<Either<Failure, List<Destination>>> call(GetDestinationsParams params) {
+  Future<Either<Failure, List<DestinationEntity>>> call(
+      GetDestinationsParams params) {
     return _repository.getDestinations(
       limit: params.limit,
       lastDocumentId: params.lastDocumentId,

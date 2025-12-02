@@ -41,13 +41,9 @@ class _ProfileState extends State<Profile> {
                   children: [
                     Text(
                       "Cadeaux disponibles",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(
-                              color:
-                                  AppTheme.lightTheme.colorScheme.onSurface,
-                              fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppTheme.lightTheme.colorScheme.onSurface,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -67,8 +63,7 @@ class _ProfileState extends State<Profile> {
                   itemBuilder: (context, index) {
                     return Container(
                       decoration: BoxDecoration(
-                          border:
-                              Border.all(width: 1.w, color: Colors.grey),
+                          border: Border.all(width: 1.w, color: Colors.grey),
                           borderRadius: BorderRadius.circular(30)),
                     );
                   },

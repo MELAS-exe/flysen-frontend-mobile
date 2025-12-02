@@ -1,13 +1,12 @@
 part of 'flight_bloc.dart';
 
 @immutable
-sealed class FlightEvent extends Equatable{
+sealed class FlightEvent extends Equatable {
   const FlightEvent();
 
   @override
   List<Object?> get props => [];
 }
-
 
 class SearchFlights extends FlightEvent {
   final FlightSearchParams params;

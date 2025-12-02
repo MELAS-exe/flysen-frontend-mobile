@@ -26,7 +26,6 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     context.read<AuthBloc>().add(CheckAuthStatus());
@@ -52,8 +51,7 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
                 children: [
                   SmoothPageIndicator(
                     effect: WormEffect(
-                      activeDotColor:
-                      AppTheme.lightTheme.colorScheme.secondary,
+                      activeDotColor: AppTheme.lightTheme.colorScheme.secondary,
                       dotColor: AppTheme.lightTheme.colorScheme.primary,
                     ),
                     controller: _pageController,
@@ -76,15 +74,14 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
                             "Allons-y",
                             style: AppTheme.lightTheme.textTheme.bodyLarge!
                                 .copyWith(
-                              color:
-                              AppTheme.lightTheme.colorScheme.primary,
+                              color: AppTheme.lightTheme.colorScheme.primary,
                             ),
                           ),
                           GestureDetector(
                             onTap: () {
                               context.read<AuthBloc>().add(
-                                const SignInAnonymouslyRequested(),
-                              );
+                                    const SignInAnonymouslyRequested(),
+                                  );
                               // showModalBottomSheet(
                               //   showDragHandle: true,
                               //   isScrollControlled: true,
@@ -113,8 +110,7 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
                               height: 40,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
-                                color:
-                                AppTheme.lightTheme.colorScheme.tertiary,
+                                color: AppTheme.lightTheme.colorScheme.tertiary,
                               ),
                               child: Center(
                                 child: Image.asset(

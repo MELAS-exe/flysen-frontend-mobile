@@ -7,11 +7,16 @@ class AppColors {
 }
 
 class AppTextStyles {
-  static const TextStyle small = TextStyle(fontSize: 12, color: AppColors.secondary);
-  static const TextStyle normal = TextStyle(fontSize: 14, color: AppColors.secondary);
-  static const TextStyle medium = TextStyle(fontSize: 16, color: AppColors.secondary);
-  static const TextStyle large = TextStyle(fontSize: 20, color: AppColors.secondary);
-  static const TextStyle headline = TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: AppColors.secondary);
+  static const TextStyle small =
+      TextStyle(fontSize: 12, color: AppColors.secondary);
+  static const TextStyle normal =
+      TextStyle(fontSize: 14, color: AppColors.secondary);
+  static const TextStyle medium =
+      TextStyle(fontSize: 16, color: AppColors.secondary);
+  static const TextStyle large =
+      TextStyle(fontSize: 20, color: AppColors.secondary);
+  static const TextStyle headline = TextStyle(
+      fontSize: 36, fontWeight: FontWeight.bold, color: AppColors.secondary);
 }
 
 class AppTheme {
@@ -27,9 +32,9 @@ class AppTheme {
         tertiary: AppColors.accent,
       ),
       textTheme: const TextTheme(
-        bodySmall: AppTextStyles.small,   // 12
+        bodySmall: AppTextStyles.small, // 12
         bodyMedium: AppTextStyles.normal, // 14
-        bodyLarge: AppTextStyles.medium,  // 16
+        bodyLarge: AppTextStyles.medium, // 16
         titleMedium: AppTextStyles.large, // 20
         headlineLarge: AppTextStyles.headline, // 36
       ),

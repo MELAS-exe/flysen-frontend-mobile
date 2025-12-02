@@ -16,17 +16,8 @@ class DiscoverAuthenticationError extends DiscoverState {
   List<Object> get props => [message];
 }
 
-class LoadDestinations extends DiscoverEvent {
-  final int limit;
-  final String? lastDocumentId;
-
-  const LoadDestinations({
-    this.limit = 20,
-    this.lastDocumentId,
-  });
-
-  @override
-  List<Object?> get props => [limit, lastDocumentId];
+class LoadInitialData extends DiscoverEvent {
+  const LoadInitialData();
 }
 
 class LoadMoreDestinations extends DiscoverEvent {

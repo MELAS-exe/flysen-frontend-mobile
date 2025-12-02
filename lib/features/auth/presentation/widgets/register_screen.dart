@@ -70,11 +70,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
           // Auto sign-in after successful registration
           Future.delayed(const Duration(milliseconds: 500), () {
             context.read<AuthBloc>().add(
-              SignInRequested(
-                email: email.text.trim(),
-                password: password1.text,
-              ),
-            );
+                  SignInRequested(
+                    email: email.text.trim(),
+                    password: password1.text,
+                  ),
+                );
           });
         } else if (state is Authenticated) {
           // After auto sign-in, close bottom sheet and navigate
@@ -157,10 +157,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           onChanged: isLoading
                               ? null
                               : (value) {
-                            setState(() {
-                              _conditionsAccepted = value!;
-                            });
-                          },
+                                  setState(() {
+                                    _conditionsAccepted = value!;
+                                  });
+                                },
                         ),
                         GestureDetector(
                           child: RichText(
@@ -168,7 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               text: "J'accepte les ",
                               style: TextStyle(
                                 color:
-                                AppTheme.lightTheme.colorScheme.secondary,
+                                    AppTheme.lightTheme.colorScheme.secondary,
                                 fontSize: 14,
                               ),
                               children: [
@@ -246,11 +246,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (_validateFields()) {
                         // Dispatch sign-up event to AuthBloc
                         context.read<AuthBloc>().add(
-                          SignUpRequested(
-                            email: email.text.trim(),
-                            password: password1.text,
-                          ),
-                        );
+                              SignUpRequested(
+                                email: email.text.trim(),
+                                password: password1.text,
+                              ),
+                            );
                       }
                     },
                   ),
@@ -259,27 +259,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   onTap: isLoading
                       ? null
                       : () {
-                    Navigator.pop(context);
-                    showModalBottomSheet(
-                      showDragHandle: true,
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return BlocProvider.value(
-                          value: context.read<AuthBloc>(),
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(
-                              20,
-                              20,
-                              20,
-                              MediaQuery.of(context).viewInsets.bottom,
-                            ),
-                            child: LoginScreen(),
-                          ),
-                        );
-                      },
-                    );
-                  },
+                          Navigator.pop(context);
+                          showModalBottomSheet(
+                            showDragHandle: true,
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (BuildContext context) {
+                              return BlocProvider.value(
+                                value: context.read<AuthBloc>(),
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                    20,
+                                    20,
+                                    20,
+                                    MediaQuery.of(context).viewInsets.bottom,
+                                  ),
+                                  child: LoginScreen(),
+                                ),
+                              );
+                            },
+                          );
+                        },
                   child: RichText(
                     text: TextSpan(
                       text: "Déjà inscrit?",

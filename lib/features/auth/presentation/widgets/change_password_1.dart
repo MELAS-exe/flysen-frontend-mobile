@@ -28,7 +28,6 @@ class _ChangePassword1State extends State<ChangePassword1> {
         ),
         SizedBox(height: 40),
         CustomTextField(hintText: "Numéro de téléphone"),
-
         SizedBox(height: 80),
         CustomButton(
           width: MediaQuery.of(context).size.width,
@@ -42,9 +41,8 @@ class _ChangePassword1State extends State<ChangePassword1> {
               context: context,
               builder: (BuildContext context) {
                 return Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20,
-                      MediaQuery.of(context).viewInsets.bottom
-                  ),
+                  padding: EdgeInsets.fromLTRB(
+                      20, 20, 20, MediaQuery.of(context).viewInsets.bottom),
                   child: ChangePassword2(),
                 );
               },
@@ -61,28 +59,28 @@ class _ChangePassword1State extends State<ChangePassword1> {
               context: context,
               builder: (BuildContext context) {
                 return Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20,
-                      MediaQuery.of(context).viewInsets.bottom
-                  ),
+                  padding: EdgeInsets.fromLTRB(
+                      20, 20, 20, MediaQuery.of(context).viewInsets.bottom),
                   child: LoginScreen(),
                 );
               },
             );
           },
           child: RichText(
-            text:
-                TextSpan(
-                  text: " Retourner à la page de connexion",
-                  style: TextStyle(
-                    color: AppTheme.lightTheme.colorScheme.tertiary,
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.underline,
-                    fontSize: 14,
-                  ),
-                ),
+            text: TextSpan(
+              text: " Retourner à la page de connexion",
+              style: TextStyle(
+                color: AppTheme.lightTheme.colorScheme.tertiary,
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+                fontSize: 14,
+              ),
             ),
           ),
-        SizedBox(height: 40,)
+        ),
+        SizedBox(
+          height: 40,
+        )
       ],
     );
   }

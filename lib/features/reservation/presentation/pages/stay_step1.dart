@@ -17,41 +17,38 @@ class _StayStep1State extends State<StayStep1> {
   int _nombreBebe = 0;
   int _nombreChambre = 0;
 
-  incrementEnfant(){
+  incrementEnfant() {
     _nombreEnfant++;
   }
 
-  decrementEnfant(){
+  decrementEnfant() {
     if (_nombreEnfant > 0) {
-    _nombreEnfant--;
+      _nombreEnfant--;
     }
   }
 
-  incrementAdulte(){
+  incrementAdulte() {
     _nombreAdulte++;
   }
 
-  decrementAdulte(){
-    if(_nombreAdulte > 0)
-    _nombreAdulte--;
+  decrementAdulte() {
+    if (_nombreAdulte > 0) _nombreAdulte--;
   }
 
-  incrementBebe(){
+  incrementBebe() {
     _nombreBebe++;
   }
 
-  decrementBebe(){
-    if(_nombreBebe > 0)
-    _nombreBebe--;
+  decrementBebe() {
+    if (_nombreBebe > 0) _nombreBebe--;
   }
 
-  incrementChambre(){
+  incrementChambre() {
     _nombreChambre++;
   }
 
-  decrementChambre(){
-    if(_nombreChambre > 0)
-    _nombreChambre--;
+  decrementChambre() {
+    if (_nombreChambre > 0) _nombreChambre--;
   }
 
   int _value = 1;
@@ -81,11 +78,8 @@ class _StayStep1State extends State<StayStep1> {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor:
-                    AppTheme
-                        .lightTheme
-                        .colorScheme
-                        .tertiary, // Button text color
+                foregroundColor: AppTheme
+                    .lightTheme.colorScheme.tertiary, // Button text color
               ),
             ),
             dialogBackgroundColor: Colors.white,
@@ -121,11 +115,8 @@ class _StayStep1State extends State<StayStep1> {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor:
-                    AppTheme
-                        .lightTheme
-                        .colorScheme
-                        .tertiary, // Button text color
+                foregroundColor: AppTheme
+                    .lightTheme.colorScheme.tertiary, // Button text color
               ),
             ),
             dialogBackgroundColor: Colors.white,
@@ -233,22 +224,20 @@ class _StayStep1State extends State<StayStep1> {
                     ),
                     SizedBox(height: 20),
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 60,
-                      padding: EdgeInsets.only(right: 10, left: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(200),
-                      ),
-                      child: Row(
-                        children: [
+                        width: MediaQuery.of(context).size.width,
+                        height: 60,
+                        padding: EdgeInsets.only(right: 10, left: 20),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(200),
+                        ),
+                        child: Row(children: [
                           Text("Nombre d'enfants: ${_nombreEnfant}",
                               style: TextStyle(fontSize: 14)),
                           Spacer(),
                           GestureDetector(
                             onTap: () {
                               setState(() {
-
                                 decrementEnfant();
                               });
                             },
@@ -261,7 +250,9 @@ class _StayStep1State extends State<StayStep1> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 10,),
+                          SizedBox(
+                            width: 10,
+                          ),
                           GestureDetector(
                             onTap: () {
                               setState(() {
@@ -277,19 +268,17 @@ class _StayStep1State extends State<StayStep1> {
                               ),
                             ),
                           ),
-                        ])
-                    ),
+                        ])),
                     SizedBox(height: 20),
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 60,
-                      padding: EdgeInsets.only(right: 10, left: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(200),
-                      ),
-                      child: Row(
-                        children: [
+                        width: MediaQuery.of(context).size.width,
+                        height: 60,
+                        padding: EdgeInsets.only(right: 10, left: 20),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(200),
+                        ),
+                        child: Row(children: [
                           Text("Nombre d'adultes: ${_nombreAdulte}",
                               style: TextStyle(fontSize: 14)),
                           Spacer(),
@@ -308,7 +297,9 @@ class _StayStep1State extends State<StayStep1> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 10,),
+                          SizedBox(
+                            width: 10,
+                          ),
                           GestureDetector(
                             onTap: () {
                               setState(() {
@@ -324,19 +315,17 @@ class _StayStep1State extends State<StayStep1> {
                               ),
                             ),
                           ),
-                        ])
-                    ),
+                        ])),
                     SizedBox(height: 20),
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 60,
-                      padding: EdgeInsets.only(right: 10, left: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(200),
-                      ),
-                      child: Row(
-                        children: [
+                        width: MediaQuery.of(context).size.width,
+                        height: 60,
+                        padding: EdgeInsets.only(right: 10, left: 20),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(200),
+                        ),
+                        child: Row(children: [
                           Text("Nombre de bébés: ${_nombreBebe}",
                               style: TextStyle(fontSize: 14)),
                           Spacer(),
@@ -355,7 +344,9 @@ class _StayStep1State extends State<StayStep1> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 10,),
+                          SizedBox(
+                            width: 10,
+                          ),
                           GestureDetector(
                             onTap: () {
                               setState(() {
@@ -371,19 +362,17 @@ class _StayStep1State extends State<StayStep1> {
                               ),
                             ),
                           ),
-                        ])
-                    ),
+                        ])),
                     SizedBox(height: 20),
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 60,
-                      padding: EdgeInsets.only(right: 10, left: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(200),
-                      ),
-                      child: Row(
-                        children: [
+                        width: MediaQuery.of(context).size.width,
+                        height: 60,
+                        padding: EdgeInsets.only(right: 10, left: 20),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(200),
+                        ),
+                        child: Row(children: [
                           Text("Nombre de chambres: ${_nombreChambre}",
                               style: TextStyle(fontSize: 14)),
                           Spacer(),
@@ -402,7 +391,9 @@ class _StayStep1State extends State<StayStep1> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 10,),
+                          SizedBox(
+                            width: 10,
+                          ),
                           GestureDetector(
                             onTap: () {
                               setState(() {
@@ -418,8 +409,7 @@ class _StayStep1State extends State<StayStep1> {
                               ),
                             ),
                           ),
-                        ])
-                    ),
+                        ])),
                     SizedBox(height: 20),
                     Row(
                       children: [

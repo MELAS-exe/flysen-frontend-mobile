@@ -22,26 +22,27 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => isLoading? (){} : onPressed(),
+      onTap: () => isLoading ? () {} : onPressed(),
       child: Container(
         width: width,
         height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
-
           color: AppTheme.lightTheme.colorScheme.tertiary,
         ),
         child: Center(
-          child: isLoading? CircularProgressIndicator(
-            color: Colors.black,
-          ): Text(
-            text,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: AppTheme.lightTheme.colorScheme.secondary,
-              fontSize: fontSize,
-            ),
-          ),
+          child: isLoading
+              ? CircularProgressIndicator(
+                  color: Colors.black,
+                )
+              : Text(
+                  text,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.lightTheme.colorScheme.secondary,
+                    fontSize: fontSize,
+                  ),
+                ),
         ),
       ),
     );

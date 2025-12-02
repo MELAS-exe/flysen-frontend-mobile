@@ -11,10 +11,10 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
 }
 
-
 @LazySingleton(as: NotificationDatasource)
 class NotificationDatasourceImpl implements NotificationDatasource {
-  NotificationDatasourceImpl({required FirebaseMessaging firebaseMessaging}) : _firebaseMessaging = firebaseMessaging;
+  NotificationDatasourceImpl({required FirebaseMessaging firebaseMessaging})
+      : _firebaseMessaging = firebaseMessaging;
 
   final FirebaseMessaging _firebaseMessaging;
 

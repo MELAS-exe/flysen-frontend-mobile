@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 class ReservationCard extends StatelessWidget {
-
   final Image airlineLogo;
   final String arilineName;
   final int nombrePersonne;
@@ -46,7 +45,9 @@ class ReservationCard extends StatelessWidget {
                   width: MediaQuery.of(context).size.width - 40,
                   height: 100,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(bottomRight: Radius.circular(15), bottomLeft: Radius.circular(15)),
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(15),
+                        bottomLeft: Radius.circular(15)),
                     border: Border.all(color: Colors.grey, width: 1),
                     color: Colors.white,
                   ),
@@ -56,15 +57,30 @@ class ReservationCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          isHotel? Text(arilineName, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)): SizedBox(height: 10,),
-                          isHotel? SizedBox(height: 10,): SizedBox(height: 0,),
-                          SizedBox(
-                              width: 40,
-                              child: airlineLogo),
+                          isHotel
+                              ? Text(arilineName,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold))
+                              : SizedBox(
+                                  height: 10,
+                                ),
+                          isHotel
+                              ? SizedBox(
+                                  height: 10,
+                                )
+                              : SizedBox(
+                                  height: 0,
+                                ),
+                          SizedBox(width: 40, child: airlineLogo),
                         ],
                       ),
-                      SizedBox(width: 10,),
-                      isHotel? SizedBox(): Text(arilineName, style: TextStyle(fontSize: 14)),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      isHotel
+                          ? SizedBox()
+                          : Text(arilineName, style: TextStyle(fontSize: 14)),
                       Spacer(),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -75,28 +91,37 @@ class ReservationCard extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Image.asset("assets/icons/user.png", width: 20),
-                                SizedBox(width: 5,),
-                                Text("$nombrePersonne personnes", style: TextStyle(fontSize: 12)),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text("$nombrePersonne personnes",
+                                    style: TextStyle(fontSize: 12)),
                               ],
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           SizedBox(
                             width: 100,
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Image.asset("assets/icons/calendar-black.png", width: 20),
-                                SizedBox(width: 5,),
-                                Text("${dateDepart.day}/${dateDepart.month}/${dateDepart.year}", style: TextStyle(fontSize: 12)),
+                                Image.asset("assets/icons/calendar-black.png",
+                                    width: 20),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                    "${dateDepart.day}/${dateDepart.month}/${dateDepart.year}",
+                                    style: TextStyle(fontSize: 12)),
                               ],
                             ),
                           ),
                         ],
                       )
                     ],
-                  )
-              ))
+                  )))
         ],
       ),
     );

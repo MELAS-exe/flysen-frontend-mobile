@@ -30,17 +30,35 @@ class _ChangePassword2State extends State<ChangePassword2> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomTextField(width: 40, height: 40,),
+            CustomTextField(
+              width: 40,
+              height: 40,
+            ),
             SizedBox(width: 20),
-            CustomTextField(width: 40, height: 40,),
+            CustomTextField(
+              width: 40,
+              height: 40,
+            ),
             SizedBox(width: 20),
-            CustomTextField(width: 40, height: 40,),
+            CustomTextField(
+              width: 40,
+              height: 40,
+            ),
             SizedBox(width: 20),
-            CustomTextField(width: 40, height: 40,),
+            CustomTextField(
+              width: 40,
+              height: 40,
+            ),
             SizedBox(width: 20),
-            CustomTextField(width: 40, height: 40,),
+            CustomTextField(
+              width: 40,
+              height: 40,
+            ),
             SizedBox(width: 20),
-            CustomTextField(width: 40, height: 40,),
+            CustomTextField(
+              width: 40,
+              height: 40,
+            ),
           ],
         ),
         Row(
@@ -55,8 +73,7 @@ class _ChangePassword2State extends State<ChangePassword2> {
                       color: AppTheme.lightTheme.colorScheme.secondary,
                       decoration: TextDecoration.underline,
                       fontWeight: FontWeight.w700,
-                      fontSize: 14
-                  ),
+                      fontSize: 14),
                 ),
               ),
             ),
@@ -76,9 +93,8 @@ class _ChangePassword2State extends State<ChangePassword2> {
               context: context,
               builder: (BuildContext context) {
                 return Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20,
-                      MediaQuery.of(context).viewInsets.bottom
-                  ),
+                  padding: EdgeInsets.fromLTRB(
+                      20, 20, 20, MediaQuery.of(context).viewInsets.bottom),
                   child: ChangePassword3(),
                 );
               },
@@ -95,17 +111,15 @@ class _ChangePassword2State extends State<ChangePassword2> {
               context: context,
               builder: (BuildContext context) {
                 return Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20,
-                      MediaQuery.of(context).viewInsets.bottom
-                  ),
+                  padding: EdgeInsets.fromLTRB(
+                      20, 20, 20, MediaQuery.of(context).viewInsets.bottom),
                   child: RegisterScreen(),
                 );
               },
             );
           },
           child: RichText(
-            text:
-            TextSpan(
+            text: TextSpan(
               text: " Retourner à la page de connexion",
               style: TextStyle(
                 color: AppTheme.lightTheme.colorScheme.tertiary,
@@ -116,7 +130,9 @@ class _ChangePassword2State extends State<ChangePassword2> {
             ),
           ),
         ),
-        SizedBox(height: 40,)
+        SizedBox(
+          height: 40,
+        )
       ],
     );
   }

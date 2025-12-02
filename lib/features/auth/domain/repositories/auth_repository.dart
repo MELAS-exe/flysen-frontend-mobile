@@ -30,10 +30,11 @@ abstract interface class AuthRepository {
 
   /// Signs in anonymously
   /// Returns [User] on success or [Failure] on error
-  Future<Either<ServerFailure, User>> signInAnonymously();
+  Future<Either<Failure, User>> signInAnonymously();
 
   /// Signs up a new user with email and password
   /// Returns [SignUpResponse] on success or [Failure] on error
   Future<Either<ServerFailure, SignUpResponse>> signUp(SignUpParams params);
 
+  Future<Either<Failure, User>> refreshToken();
 }

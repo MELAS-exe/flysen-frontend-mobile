@@ -5,11 +5,11 @@ import 'package:flysen_frontend_mobile/firebase_options.dart';
 
 @module
 abstract class ThirdPartyModule {
-  Future<FirebaseApp> get firebaseApp =>
-      Firebase.initializeApp(
+  Future<FirebaseApp> get firebaseApp => Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
 
   @lazySingleton
   FirebaseMessaging get firebaseMessaging => FirebaseMessaging.instance;
 }
+//flutter pub run build_runner build --delete-conflicting-outputs

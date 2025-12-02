@@ -1,4 +1,3 @@
-
 class ServerException implements Exception {
   final String message;
   ServerException({required this.message});
@@ -7,7 +6,7 @@ class ServerException implements Exception {
   String toString() => 'ServerException: $message';
 }
 
-class AuthException implements Exception{
+class AuthException implements Exception {
   final String message;
   AuthException({required this.message});
 

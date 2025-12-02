@@ -18,11 +18,12 @@ class FlightPriceResponseModel extends FlightPriceResponse {
     return FlightPriceResponseModel(
       flightOffers: _parseList(
         data['flightOffers'] as List<dynamic>?,
-            (item) => FlightOfferModel.fromJson(item), // Réutiliser le modèle existant
+        (item) =>
+            FlightOfferModel.fromJson(item), // Réutiliser le modèle existant
       ),
       bookingRequirements: data['bookingRequirements'] != null
           ? BookingRequirementsModel.fromJson(
-          data['bookingRequirements'] as Map<String, dynamic>)
+              data['bookingRequirements'] as Map<String, dynamic>)
           : null,
     );
   }
@@ -36,8 +37,9 @@ class BookingRequirementsModel extends BookingRequirements {
 
   factory BookingRequirementsModel.fromJson(Map<String, dynamic> json) {
     return BookingRequirementsModel(
-      emailAddressRequired: json['emailAddressRequired'] as bool,
-      mobilePhoneNumberRequired: json['mobilePhoneNumberRequired'] as bool,
+      emailAddressRequired: json['emailAddressRequired'] as bool? ?? false,
+      mobilePhoneNumberRequired:
+          json['mobilePhoneNumberRequired'] as bool? ?? false,
     );
   }
 }

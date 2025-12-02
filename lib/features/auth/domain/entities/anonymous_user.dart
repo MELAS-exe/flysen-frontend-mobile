@@ -13,11 +13,8 @@ class AnonymousUser extends User {
     required super.idToken,
     required super.refreshToken,
     required super.expiresIn,
-    required this.uid,
   }) : super(email: 'anonymous');
 
-  final String uid;
-
   @override
-  List<Object?> get props => [idToken, refreshToken, expiresIn, uid];
+  List<Object?> get props => [idToken, refreshToken, expiresIn];
 }

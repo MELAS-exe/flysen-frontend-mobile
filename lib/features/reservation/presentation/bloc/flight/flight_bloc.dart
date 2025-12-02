@@ -18,7 +18,8 @@ class FlightBloc extends Bloc<FlightEvent, FlightState> {
   final GetFlightsUseCase getFlightsUseCase;
   final GetFlightPriceUseCase getFlightPriceUseCase;
 
-  FlightBloc(this.getFlightsUseCase, this.getFlightPriceUseCase) : super(FlightInitial()) {
+  FlightBloc(this.getFlightsUseCase, this.getFlightPriceUseCase)
+      : super(FlightInitial()) {
     on<SearchFlights>(_onSearchFlights);
     on<PriceFlight>(_onPriceFlight);
   }
@@ -36,16 +37,16 @@ class FlightBloc extends Bloc<FlightEvent, FlightState> {
     final result = await getFlightPriceUseCase(params);
 
     result.fold(
-          (failure) {
-            if (failure is ServerFailure) {
-              emit(FlightError(failure.message));
-            }
+      (failure) {
+        if (failure is ServerFailure) {
+          emit(FlightError(failure.message));
+        }
 
-            if (failure is LocalFailure) {
-              emit(FlightError(failure.message));
-            }
-          },
-          (priceResponse) => emit(FlightPriceLoaded(priceResponse)),
+        if (failure is LocalFailure) {
+          emit(FlightError(failure.message));
+        }
+      },
+      (priceResponse) => emit(FlightPriceLoaded(priceResponse)),
     );
   }
 
@@ -53,27 +54,23 @@ class FlightBloc extends Bloc<FlightEvent, FlightState> {
       SearchFlights event, Emitter<FlightState> emit) async {
     emit(FlightLoading());
     final result = await getFlightsUseCase(event.params);
-    result.fold(
-          (failure) {
-        if (failure is ServerFailure) {
-          emit(FlightError(failure.message));
-        } else if (failure is LocalFailure) {
-          emit(FlightError(failure.message));
-        }
-        else {
-          emit(FlightError(failure.message));
-        }
-      },
-          (responseWrapper) {
-            final allLocationNames = {...event.locationNames};
-            emit(
-              FlightLoaded(
-                flightOffers: responseWrapper.flightOffers,
-                carrierNames: responseWrapper.carrierNames,
-                locationNames: allLocationNames, // Pass the map to the state
-              ),
-            );
-          }
-    );
+    result.fold((failure) {
+      if (failure is ServerFailure) {
+        emit(FlightError(failure.message));
+      } else if (failure is LocalFailure) {
+        emit(FlightError(failure.message));
+      } else {
+        emit(FlightError(failure.message));
+      }
+    }, (responseWrapper) {
+      final allLocationNames = {...event.locationNames};
+      emit(
+        FlightLoaded(
+          flightOffers: responseWrapper.flightOffers,
+          carrierNames: responseWrapper.carrierNames,
+          locationNames: allLocationNames, // Pass the map to the state
+        ),
+      );
+    });
   }
 }

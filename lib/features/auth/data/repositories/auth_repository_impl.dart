@@ -5,12 +5,15 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'package:cloudflare_turnstile/cloudflare_turnstile.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flysen_frontend_mobile/core/domain/failures/exceptions.dart';
 import 'package:flysen_frontend_mobile/core/domain/failures/failure.dart';
 import 'package:flysen_frontend_mobile/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:flysen_frontend_mobile/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:flysen_frontend_mobile/features/auth/data/datasources/auth_remote_data_source_impl.dart';
+import 'package:flysen_frontend_mobile/features/auth/data/datasources/turnstile_data_source.dart';
+import 'package:flysen_frontend_mobile/features/auth/data/models/refresh_token_request.dart';
 import 'package:flysen_frontend_mobile/features/auth/data/models/sign_in_request.dart';
 import 'package:flysen_frontend_mobile/features/auth/data/models/sign_up_request.dart';
 import 'package:flysen_frontend_mobile/features/auth/domain/entities/sign_in_params.dart';
@@ -25,11 +28,39 @@ import 'package:injectable/injectable.dart';
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _remoteDataSource;
   final AuthLocalDataSource _localDataSource;
+  final TurnstileDataSource turnstileDataSource;
 
   AuthRepositoryImpl(
-      this._remoteDataSource,
-      this._localDataSource,
-      );
+    this._remoteDataSource,
+    this._localDataSource,
+    this.turnstileDataSource,
+  );
+
+  @override
+  Future<Either<Failure, User>> signInAnonymously() async {
+    try {
+      // 1. Get the Turnstile token first.
+      final turnstileToken = await turnstileDataSource.getToken();
+
+      // 2. Call remote data source for anonymous sign-in, now with the token.
+      //    (You will need to update the _remoteDataSource.signInAnonymously method signature).
+      final userModel =
+          await _remoteDataSource.signInAnonymously(turnstileToken);
+
+      // 3. Cache the user locally.
+      await _localDataSource.saveUser(userModel);
+
+      // 4. Return the user entity.
+      return Right(userModel.toEntity());
+    } on TurnstileException catch (e) {
+      // Catch the specific exception from the Turnstile data source.
+      return Left(TurnstileFailure(message: e.message));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
+    } catch (e) {
+      return Left(ServerFailure(message: 'Unexpected error: ${e.toString()}'));
+    }
+  }
 
   @override
   Future<Either<ServerFailure, User>> signIn(SignInParams params) async {
@@ -59,7 +90,8 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(hasUser);
     } catch (e) {
       return Left(
-        LocalFailure(message: 'Failed to check sign in status: ${e.toString()}'),
+        LocalFailure(
+            message: 'Failed to check sign in status: ${e.toString()}'),
       );
     }
   }
@@ -82,25 +114,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<ServerFailure, User>> signInAnonymously() async {
-    try {
-      // Call remote data source for anonymous sign-in
-      final userModel = await _remoteDataSource.signInAnonymously();
-
-      // Cache the user locally
-      await _localDataSource.saveUser(userModel);
-
-      // Return the user entity
-      return Right(userModel.toEntity());
-    } on ServerException catch (e) {
-      return Left(ServerFailure(message: e.message));
-    } catch (e) {
-      return Left(ServerFailure(message: 'Unexpected error: ${e.toString()}'));
-    }
-  }
-
-  @override
-  Future<Either<ServerFailure, SignUpResponse>> signUp(SignUpParams params) async {
+  Future<Either<ServerFailure, SignUpResponse>> signUp(
+      SignUpParams params) async {
     try {
       // Create request from params
       final request = SignUpRequest.fromParams(params);
@@ -141,5 +156,25 @@ class AuthRepositoryImpl implements AuthRepository {
 
     // Return success.
     return const Right(null);
+  }
+
+  @override
+  Future<Either<Failure, User>> refreshToken() async {
+    try {
+      final user = await getCurrentUser();
+      user.fold((failure) => Left(failure), (user) async {
+        if (user.refreshToken == null) {
+          return Left(LocalFailure(message: "No user found locally"));
+        }
+        final refreshResponse = await _remoteDataSource
+            .refreshToken(RefreshTokenRequest(refreshToken: user.refreshToken));
+        await _localDataSource.saveUser(refreshResponse);
+        return Right(refreshResponse.toEntity());
+      });
+      return Left(LocalFailure(message: "No user found locally"));
+    } on Exception catch (e) {
+      return Left(
+          ServerFailure(message: 'Failed to refresh token: ${e.toString()}'));
+    }
   }
 }

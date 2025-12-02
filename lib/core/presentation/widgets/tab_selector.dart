@@ -49,7 +49,7 @@ class _TabSelectorState<T> extends State<TabSelector<T>> {
             child: ReusableTabButton<T>(
               title: title,
               value: value,
-              height: 32.h,
+              height: 24.h,
               groupValue: _currentValue,
               onChanged: (newValue) {
                 // Update the internal state to reflect the new selection

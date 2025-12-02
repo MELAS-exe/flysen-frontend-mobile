@@ -44,7 +44,8 @@ class FlightOffer extends Equatable {
   // --- MÉTHODE TOJSON AJOUTÉE ---
   Map<String, dynamic> toJson() {
     return {
-      'type': 'flight-offer', // L'API s'attend à ce champ dans le corps de la requête
+      'type':
+          'flight-offer', // L'API s'attend à ce champ dans le corps de la requête
       'id': id,
       'source': source,
       'instantTicketingRequired': instantTicketingRequired,
@@ -68,22 +69,22 @@ class FlightOffer extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    source,
-    instantTicketingRequired,
-    nonHomogeneous,
-    oneWay,
-    isUpsellOffer,
-    lastTicketingDate,
-    lastTicketingDateTime,
-    numberOfBookableSeats,
-    itineraries,
-    price,
-    pricingOptions,
-    validatingAirlineCodes,
-    travelerPricings,
-    paymentCardRequired,
-  ];
+        id,
+        source,
+        instantTicketingRequired,
+        nonHomogeneous,
+        oneWay,
+        isUpsellOffer,
+        lastTicketingDate,
+        lastTicketingDateTime,
+        numberOfBookableSeats,
+        itineraries,
+        price,
+        pricingOptions,
+        validatingAirlineCodes,
+        travelerPricings,
+        paymentCardRequired,
+      ];
 }
 
 class Itinerary extends Equatable {
@@ -96,9 +97,9 @@ class Itinerary extends Equatable {
   final List<Segment> segments;
 
   Map<String, dynamic> toJson() => {
-    if (duration != null) 'duration': duration,
-    'segments': _listToJson(segments),
-  };
+        if (duration != null) 'duration': duration,
+        'segments': _listToJson(segments),
+      };
 
   @override
   List<Object?> get props => [duration, segments];
@@ -132,33 +133,33 @@ class Segment extends Equatable {
   final List<Co2Emission>? co2Emissions;
 
   Map<String, dynamic> toJson() => {
-    'departure': departure.toJson(),
-    'arrival': arrival.toJson(),
-    'carrierCode': carrierCode,
-    'number': number,
-    'aircraft': aircraft.toJson(),
-    'operating': operating.toJson(),
-    'duration': duration,
-    'id': id,
-    'numberOfStops': numberOfStops,
-    if (blacklistedInEU != null) 'blacklistedInEU': blacklistedInEU,
-    if (co2Emissions != null) 'co2Emissions': _listToJson(co2Emissions),
-  };
+        'departure': departure.toJson(),
+        'arrival': arrival.toJson(),
+        'carrierCode': carrierCode,
+        'number': number,
+        'aircraft': aircraft.toJson(),
+        'operating': operating.toJson(),
+        'duration': duration,
+        'id': id,
+        'numberOfStops': numberOfStops,
+        if (blacklistedInEU != null) 'blacklistedInEU': blacklistedInEU,
+        if (co2Emissions != null) 'co2Emissions': _listToJson(co2Emissions),
+      };
 
   @override
   List<Object?> get props => [
-    departure,
-    arrival,
-    carrierCode,
-    number,
-    aircraft,
-    operating,
-    duration,
-    id,
-    numberOfStops,
-    blacklistedInEU,
-    co2Emissions
-  ];
+        departure,
+        arrival,
+        carrierCode,
+        number,
+        aircraft,
+        operating,
+        duration,
+        id,
+        numberOfStops,
+        blacklistedInEU,
+        co2Emissions
+      ];
 }
 
 class Co2Emission extends Equatable {
@@ -170,10 +171,10 @@ class Co2Emission extends Equatable {
   final String cabin;
 
   Map<String, dynamic> toJson() => {
-    'weight': weight,
-    'weightUnit': weightUnit,
-    'cabin': cabin,
-  };
+        'weight': weight,
+        'weightUnit': weightUnit,
+        'cabin': cabin,
+      };
 
   @override
   List<Object?> get props => [weight, weightUnit, cabin];
@@ -191,10 +192,10 @@ class FlightEndpoint extends Equatable {
   final String? terminal;
 
   Map<String, dynamic> toJson() => {
-    'iataCode': iataCode,
-    'at': at,
-    if (terminal != null) 'terminal': terminal,
-  };
+        'iataCode': iataCode,
+        'at': at,
+        if (terminal != null) 'terminal': terminal,
+      };
 
   @override
   List<Object?> get props => [iataCode, at, terminal];
@@ -206,8 +207,8 @@ class Aircraft extends Equatable {
   final String code;
 
   Map<String, dynamic> toJson() => {
-    'code': code,
-  };
+        'code': code,
+      };
 
   @override
   List<Object?> get props => [code];
@@ -219,8 +220,8 @@ class Operating extends Equatable {
   final String carrierCode;
 
   Map<String, dynamic> toJson() => {
-    'carrierCode': carrierCode,
-  };
+        'carrierCode': carrierCode,
+      };
 
   @override
   List<Object?> get props => [carrierCode];
@@ -248,27 +249,27 @@ class Price extends Equatable {
   final String? billingCurrency;
 
   Map<String, dynamic> toJson() => {
-    'currency': currency,
-    'total': total,
-    'base': base,
-    if (fees != null) 'fees': _listToJson(fees),
-    if (grandTotal != null) 'grandTotal': grandTotal,
-    if (taxes != null) 'taxes': _listToJson(taxes),
-    if (refundableTaxes != null) 'refundableTaxes': refundableTaxes,
-    if (billingCurrency != null) 'billingCurrency': billingCurrency,
-  };
+        'currency': currency,
+        'total': total,
+        'base': base,
+        if (fees != null) 'fees': _listToJson(fees),
+        if (grandTotal != null) 'grandTotal': grandTotal,
+        if (taxes != null) 'taxes': _listToJson(taxes),
+        if (refundableTaxes != null) 'refundableTaxes': refundableTaxes,
+        if (billingCurrency != null) 'billingCurrency': billingCurrency,
+      };
 
   @override
   List<Object?> get props => [
-    currency,
-    total,
-    base,
-    fees,
-    grandTotal,
-    taxes,
-    refundableTaxes,
-    billingCurrency
-  ];
+        currency,
+        total,
+        base,
+        fees,
+        grandTotal,
+        taxes,
+        refundableTaxes,
+        billingCurrency
+      ];
 }
 
 class Fee extends Equatable {
@@ -281,9 +282,9 @@ class Fee extends Equatable {
   final String type;
 
   Map<String, dynamic> toJson() => {
-    'amount': amount,
-    'type': type,
-  };
+        'amount': amount,
+        'type': type,
+      };
 
   @override
   List<Object?> get props => [amount, type];
@@ -297,9 +298,9 @@ class Tax extends Equatable {
   final String code;
 
   Map<String, dynamic> toJson() => {
-    'amount': amount,
-    'code': code,
-  };
+        'amount': amount,
+        'code': code,
+      };
 
   @override
   List<Object?> get props => [amount, code];
@@ -315,9 +316,9 @@ class PricingOptions extends Equatable {
   final bool includedCheckedBagsOnly;
 
   Map<String, dynamic> toJson() => {
-    'fareType': fareType,
-    'includedCheckedBagsOnly': includedCheckedBagsOnly,
-  };
+        'fareType': fareType,
+        'includedCheckedBagsOnly': includedCheckedBagsOnly,
+      };
 
   @override
   List<Object?> get props => [fareType, includedCheckedBagsOnly];
@@ -339,21 +340,21 @@ class TravelerPricing extends Equatable {
   final List<FareDetails> fareDetailsBySegment;
 
   Map<String, dynamic> toJson() => {
-    'travelerId': travelerId,
-    'fareOption': fareOption,
-    'travelerType': travelerType,
-    'price': price.toJson(),
-    'fareDetailsBySegment': _listToJson(fareDetailsBySegment),
-  };
+        'travelerId': travelerId,
+        'fareOption': fareOption,
+        'travelerType': travelerType,
+        'price': price.toJson(),
+        'fareDetailsBySegment': _listToJson(fareDetailsBySegment),
+      };
 
   @override
   List<Object?> get props => [
-    travelerId,
-    fareOption,
-    travelerType,
-    price,
-    fareDetailsBySegment,
-  ];
+        travelerId,
+        fareOption,
+        travelerType,
+        price,
+        fareDetailsBySegment,
+      ];
 }
 
 class FareDetails extends Equatable {
@@ -380,30 +381,30 @@ class FareDetails extends Equatable {
   final List<Amenity>? amenities;
 
   Map<String, dynamic> toJson() => {
-    'segmentId': segmentId,
-    'cabin': cabin,
-    'fareBasis': fareBasis,
-    'class': fareClass, // Attention, 'class' est un mot-clé réservé en JSON
-    'includedCheckedBags': includedCheckedBags.toJson(),
-    if (includedCabinBags != null)
-      'includedCabinBags': includedCabinBags!.toJson(),
-    if (brandedFare != null) 'brandedFare': brandedFare,
-    if (brandedFareLabel != null) 'brandedFareLabel': brandedFareLabel,
-    if (amenities != null) 'amenities': _listToJson(amenities),
-  };
+        'segmentId': segmentId,
+        'cabin': cabin,
+        'fareBasis': fareBasis,
+        'class': fareClass, // Attention, 'class' est un mot-clé réservé en JSON
+        'includedCheckedBags': includedCheckedBags.toJson(),
+        if (includedCabinBags != null)
+          'includedCabinBags': includedCabinBags!.toJson(),
+        if (brandedFare != null) 'brandedFare': brandedFare,
+        if (brandedFareLabel != null) 'brandedFareLabel': brandedFareLabel,
+        if (amenities != null) 'amenities': _listToJson(amenities),
+      };
 
   @override
   List<Object?> get props => [
-    segmentId,
-    cabin,
-    fareBasis,
-    fareClass,
-    includedCheckedBags,
-    includedCabinBags,
-    brandedFare,
-    brandedFareLabel,
-    amenities,
-  ];
+        segmentId,
+        cabin,
+        fareBasis,
+        fareClass,
+        includedCheckedBags,
+        includedCabinBags,
+        brandedFare,
+        brandedFareLabel,
+        amenities,
+      ];
 }
 
 class BagAllowance extends Equatable {
@@ -412,8 +413,8 @@ class BagAllowance extends Equatable {
   final int quantity;
 
   Map<String, dynamic> toJson() => {
-    'quantity': quantity,
-  };
+        'quantity': quantity,
+      };
 
   @override
   List<Object?> get props => [quantity];
@@ -433,19 +434,19 @@ class Amenity extends Equatable {
   final AmenityProvider amenityProvider;
 
   Map<String, dynamic> toJson() => {
-    'description': description,
-    'isChargeable': isChargeable,
-    'amenityType': amenityType,
-    'amenityProvider': amenityProvider.toJson(),
-  };
+        'description': description,
+        'isChargeable': isChargeable,
+        'amenityType': amenityType,
+        'amenityProvider': amenityProvider.toJson(),
+      };
 
   @override
   List<Object?> get props => [
-    description,
-    isChargeable,
-    amenityType,
-    amenityProvider,
-  ];
+        description,
+        isChargeable,
+        amenityType,
+        amenityProvider,
+      ];
 }
 
 class AmenityProvider extends Equatable {
@@ -454,8 +455,8 @@ class AmenityProvider extends Equatable {
   final String name;
 
   Map<String, dynamic> toJson() => {
-    'name': name,
-  };
+        'name': name,
+      };
 
   @override
   List<Object?> get props => [name];

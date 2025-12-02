@@ -70,12 +70,14 @@ class _TripStep2State extends State<TripStep2> {
     if (_originalOffers.isNotEmpty) {
       // Find cheapest offer
       final cheapestList = List<FlightOffer>.from(_originalOffers)
-        ..sort((a, b) => double.parse(a.price.total).compareTo(double.parse(b.price.total)));
+        ..sort((a, b) =>
+            double.parse(a.price.total).compareTo(double.parse(b.price.total)));
       _cheapestOfferId = cheapestList.first.id;
 
       // Find fastest offer
       final fastestList = List<FlightOffer>.from(_originalOffers)
-        ..sort((a, b) => _compareDuration(a.itineraries.first.duration!, b.itineraries.first.duration!));
+        ..sort((a, b) => _compareDuration(
+            a.itineraries.first.duration!, b.itineraries.first.duration!));
       _fastestOfferId = fastestList.first.id;
     } else {
       _cheapestOfferId = null;
@@ -113,7 +115,6 @@ class _TripStep2State extends State<TripStep2> {
     return Scaffold(
       appBar: TopBar(
         showBack: true,
-        title: "Dakar vers Paris",
       ),
       body: SafeArea(
         child: Column(
@@ -154,13 +155,17 @@ class _TripStep2State extends State<TripStep2> {
 
                   if (_displayOffers.isEmpty) {
                     if (state is FlightLoaded) {
-                      return const Center(child: Text('Aucun vol correspondant à vos critères.'));
+                      return const Center(
+                          child:
+                              Text('Aucun vol correspondant à vos critères.'));
                     }
-                    return const Center(child: Text('Commencez une recherche de vol.'));
+                    return const Center(
+                        child: Text('Commencez une recherche de vol.'));
                   }
 
-                  final carrierNames =
-                  (state is FlightLoaded) ? state.carrierNames : <String, String>{};
+                  final carrierNames = (state is FlightLoaded)
+                      ? state.carrierNames
+                      : <String, String>{};
 
                   return ListView.separated(
                     padding: Dimension.aroundPadding,
@@ -182,7 +187,8 @@ class _TripStep2State extends State<TripStep2> {
                         },
                       );
                     },
-                    separatorBuilder: (context, index) => SizedBox(height: 10.h),
+                    separatorBuilder: (context, index) =>
+                        SizedBox(height: 10.h),
                   );
                 },
               ),

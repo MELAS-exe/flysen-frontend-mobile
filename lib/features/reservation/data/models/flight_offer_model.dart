@@ -26,25 +26,25 @@ class FlightOfferModel extends FlightOffer {
 
   factory FlightOfferModel.fromJson(Map<String, dynamic> json) {
     return FlightOfferModel(
-        id: json['id'] as String,
-        source: json['source'] as String,
-        instantTicketingRequired: json['instantTicketingRequired'] as bool,
-        nonHomogeneous: json['nonHomogeneous'] as bool,
-        oneWay: json['oneWay'] as bool,
-        isUpsellOffer: json['isUpsellOffer'] as bool,
-        lastTicketingDate: json['lastTicketingDate'] as String,
-        lastTicketingDateTime: json['lastTicketingDateTime'] as String,
-        numberOfBookableSeats: json['numberOfBookableSeats'] as int,
+        id: json['id'] as String? ?? '',
+        source: json['source'] as String? ?? 'GDS',
+        instantTicketingRequired:
+            json['instantTicketingRequired'] as bool? ?? false,
+        nonHomogeneous: json['nonHomogeneous'] as bool? ?? false,
+        oneWay: json['oneWay'] as bool? ?? false,
+        isUpsellOffer: json['isUpsellOffer'] as bool? ?? false,
+        lastTicketingDate: json['lastTicketingDate'] as String? ?? '',
+        lastTicketingDateTime: json['lastTicketingDateTime'] as String? ?? '',
+        numberOfBookableSeats: json['numberOfBookableSeats'] as int? ?? 0,
         itineraries: _parseList(
             json['itineraries'] as List<dynamic>?, ItineraryModel.fromJson),
         price: PriceModel.fromJson(json['price'] as Map<String, dynamic>),
         pricingOptions: PricingOptionsModel.fromJson(
             json['pricingOptions'] as Map<String, dynamic>),
         validatingAirlineCodes:
-            List<String>.from(json['validatingAirlineCodes'] as List),
+            List<String>.from(json['validatingAirlineCodes'] as List? ?? []),
         travelerPricings: _parseList(json['travelerPricings'] as List<dynamic>?,
-            TravelerPricingModel.fromJson)
-    );
+            TravelerPricingModel.fromJson));
   }
 }
 
@@ -54,8 +54,9 @@ class ItineraryModel extends Itinerary {
 
   factory ItineraryModel.fromJson(Map<String, dynamic> json) {
     return ItineraryModel(
-      duration: json['duration'] as String,
-      segments: _parseList(json['segments'] as List<dynamic>?, SegmentModel.fromJson),
+      duration: json['duration'] as String? ?? '',
+      segments:
+          _parseList(json['segments'] as List<dynamic>?, SegmentModel.fromJson),
     );
   }
 }
@@ -79,16 +80,16 @@ class SegmentModel extends Segment {
           json['departure'] as Map<String, dynamic>),
       arrival:
           FlightEndpointModel.fromJson(json['arrival'] as Map<String, dynamic>),
-      carrierCode: json['carrierCode'] as String,
-      number: json['number'] as String,
+      carrierCode: json['carrierCode'] as String? ?? '',
+      number: json['number'] as String? ?? '',
       aircraft:
           AircraftModel.fromJson(json['aircraft'] as Map<String, dynamic>),
       operating:
           OperatingModel.fromJson(json['operating'] as Map<String, dynamic>),
-      duration: json['duration'] as String,
+      duration: json['duration'] as String? ?? '',
       id: json['id'] as String,
-      numberOfStops: json['numberOfStops'] as int,
-      blacklistedInEU: json['blacklistedInEU'] as bool,
+      numberOfStops: json['numberOfStops'] as int? ?? 0,
+      blacklistedInEU: json['blacklistedInEU'] as bool? ?? false,
     );
   }
 }
@@ -99,8 +100,8 @@ class FlightEndpointModel extends FlightEndpoint {
 
   factory FlightEndpointModel.fromJson(Map<String, dynamic> json) {
     return FlightEndpointModel(
-      iataCode: json['iataCode'] as String,
-      at: json['at'] as String,
+      iataCode: json['iataCode'] as String? ?? '',
+      at: json['at'] as String? ?? '',
       terminal: json['terminal'] as String?,
     );
   }
@@ -110,7 +111,7 @@ class AircraftModel extends Aircraft {
   const AircraftModel({required super.code});
 
   factory AircraftModel.fromJson(Map<String, dynamic> json) {
-    return AircraftModel(code: json['code'] as String);
+    return AircraftModel(code: json['code'] as String? ?? '');
   }
 }
 
@@ -118,7 +119,7 @@ class OperatingModel extends Operating {
   const OperatingModel({required super.carrierCode});
 
   factory OperatingModel.fromJson(Map<String, dynamic> json) {
-    return OperatingModel(carrierCode: json['carrierCode'] as String);
+    return OperatingModel(carrierCode: json['carrierCode'] as String? ?? '');
   }
 }
 
@@ -132,9 +133,9 @@ class PriceModel extends Price {
 
   factory PriceModel.fromJson(Map<String, dynamic> json) {
     return PriceModel(
-      currency: json['currency'] as String,
-      total: json['total'] as String,
-      base: json['base'] as String,
+      currency: json['currency'] as String? ?? '',
+      total: json['total'] as String? ?? '',
+      base: json['base'] as String? ?? '',
       fees: _parseList(json['fees'] as List<dynamic>?, FeeModel.fromJson),
       grandTotal: json['grandTotal'] as String?,
     );
@@ -146,8 +147,8 @@ class FeeModel extends Fee {
 
   factory FeeModel.fromJson(Map<String, dynamic> json) {
     return FeeModel(
-      amount: json['amount'] as String,
-      type: json['type'] as String,
+      amount: json['amount'] as String? ?? '',
+      type: json['type'] as String? ?? '',
     );
   }
 }
@@ -174,12 +175,13 @@ class TravelerPricingModel extends TravelerPricing {
 
   factory TravelerPricingModel.fromJson(Map<String, dynamic> json) {
     return TravelerPricingModel(
-      travelerId: json['travelerId'] as String,
-      fareOption: json['fareOption'] as String,
-      travelerType: json['travelerType'] as String,
+      travelerId: json['travelerId'] as String? ?? '',
+      fareOption: json['fareOption'] as String? ?? '',
+      travelerType: json['travelerType'] as String? ?? '',
       price: PriceModel.fromJson(json['price'] as Map<String, dynamic>),
       fareDetailsBySegment: _parseList(
-          json['fareDetailsBySegment'] as List<dynamic>?, FareDetailsModel.fromJson),
+          json['fareDetailsBySegment'] as List<dynamic>?,
+          FareDetailsModel.fromJson),
     );
   }
 }
@@ -198,18 +200,23 @@ class FareDetailsModel extends FareDetails {
 
   factory FareDetailsModel.fromJson(Map<String, dynamic> json) {
     return FareDetailsModel(
-      segmentId: json['segmentId'] as String,
-      cabin: json['cabin'] as String,
-      fareBasis: json['fareBasis'] as String,
-      fareClass: json['class']
-          as String, // 'class' est un mot clé, on le mappe depuis le json
-      includedCheckedBags: BagAllowanceModel.fromJson(
-          json['includedCheckedBags'] as Map<String, dynamic>),
-      includedCabinBags: BagAllowanceModel.fromJson(
-          json['includedCabinBags'] as Map<String, dynamic>),
+      segmentId: json['segmentId'] as String? ?? '',
+      cabin: json['cabin'] as String? ?? '',
+      fareBasis: json['fareBasis'] as String? ?? '',
+      fareClass: json['class'] as String? ??
+          '', // 'class' est un mot clé, on le mappe depuis le json
+      includedCheckedBags: json['includedCheckedBags'] != null
+          ? BagAllowanceModel.fromJson(
+              json['includedCheckedBags'] as Map<String, dynamic>)
+          : const BagAllowanceModel(quantity: 0),
+      includedCabinBags: json['includedCabinBags'] != null
+          ? BagAllowanceModel.fromJson(
+              json['includedCabinBags'] as Map<String, dynamic>)
+          : const BagAllowanceModel(quantity: 0),
       brandedFare: json['brandedFare'] as String?,
       brandedFareLabel: json['brandedFareLabel'] as String?,
-      amenities: _parseList(json['amenities'] as List<dynamic>?, AmenityModel.fromJson),
+      amenities: _parseList(
+          json['amenities'] as List<dynamic>?, AmenityModel.fromJson),
     );
   }
 }
@@ -218,7 +225,7 @@ class BagAllowanceModel extends BagAllowance {
   const BagAllowanceModel({required super.quantity});
 
   factory BagAllowanceModel.fromJson(Map<String, dynamic> json) {
-    return BagAllowanceModel(quantity: json['quantity'] as int);
+    return BagAllowanceModel(quantity: json['quantity'] as int? ?? 0);
   }
 }
 
@@ -231,9 +238,9 @@ class AmenityModel extends Amenity {
 
   factory AmenityModel.fromJson(Map<String, dynamic> json) {
     return AmenityModel(
-      description: json['description'] as String,
-      isChargeable: json['isChargeable'] as bool,
-      amenityType: json['amenityType'] as String,
+      description: json['description'] as String? ?? '',
+      isChargeable: json['isChargeable'] as bool? ?? false,
+      amenityType: json['amenityType'] as String? ?? '',
       amenityProvider: AmenityProviderModel.fromJson(
           json['amenityProvider'] as Map<String, dynamic>),
     );
@@ -244,6 +251,6 @@ class AmenityProviderModel extends AmenityProvider {
   const AmenityProviderModel({required super.name});
 
   factory AmenityProviderModel.fromJson(Map<String, dynamic> json) {
-    return AmenityProviderModel(name: json['name'] as String);
+    return AmenityProviderModel(name: json['name'] as String? ?? '');
   }
 }

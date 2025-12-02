@@ -26,9 +26,8 @@ class _CustomCounterState extends State<CustomCounter> {
           border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.circular(200),
         ),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           GestureDetector(
             onTap: widget.decrement,
             child: CircleAvatar(
@@ -40,8 +39,7 @@ class _CustomCounterState extends State<CustomCounter> {
               ),
             ),
           ),
-          Text("${widget.label}",
-              style: TextStyle(fontSize: 14)),
+          Text("${widget.label}", style: TextStyle(fontSize: 14)),
           GestureDetector(
             onTap: widget.increment,
             child: CircleAvatar(
